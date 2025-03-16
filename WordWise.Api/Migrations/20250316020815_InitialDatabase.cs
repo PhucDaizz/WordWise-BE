@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WordWise.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialData : Migration
+    public partial class InitialDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,6 +58,18 @@ namespace WordWise.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "IdentityUserRole<string>",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityUserRole<string>", x => new { x.UserId, x.RoleId });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FlashcardSets",
                 columns: table => new
                 {
@@ -103,7 +115,7 @@ namespace WordWise.Api.Migrations
                         column: x => x.UserId,
                         principalTable: "ExtendedIdentityUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -203,16 +215,32 @@ namespace WordWise.Api.Migrations
                         column: x => x.MultipleChoiceTestId,
                         principalTable: "MultipleChoiceTests",
                         principalColumn: "MultipleChoiceTestId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "ExtendedIdentityUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmed", "Gender", "Level", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiry", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef", 0, "c48b7b54-3bd4-483a-9572-2d22321a9237", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "dai742004.dn@gmail.com", false, false, 0, false, null, "DAI742004.DN@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAEICWsMhv0vtDjWjM5tQcq/8VX4fVH52a2zmPEF1loW0g3sJszs+eeDkr7ap9CaVy3A==", null, false, null, null, "d456afd1-67e9-48dc-80f8-f7fc4a57781b", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "IdentityRole",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "477d3788-e4b3-4f3d-8dbd-aaead19b78ab", null, "Admin", "ADMIN" },
-                    { "8bc05967-a01b-424c-a760-475af79c738f", null, "User", "USER" }
+                    { "477d3788-e4b3-4f3d-8dbd-aaead19b78ab", "0ec19d70-a0d3-46ee-a0aa-2502443be36c", "Admin", "ADMIN" },
+                    { "8bc05967-a01b-424c-a760-475af79c738f", "c6cdf17f-ef27-4966-8504-ac0f139be323", "User", "USER" },
+                    { "e95e8a62-fb9b-4b1d-9b64-b36e5805c4f1", "b4365062-08e1-41ee-9b00-c8a7815f6ab6", "SuperAdmin", "SUPERADMIN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "IdentityUserRole<string>",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "477d3788-e4b3-4f3d-8dbd-aaead19b78ab", "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef" },
+                    { "8bc05967-a01b-424c-a760-475af79c738f", "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef" },
+                    { "e95e8a62-fb9b-4b1d-9b64-b36e5805c4f1", "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -262,6 +290,9 @@ namespace WordWise.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "IdentityRole");
+
+            migrationBuilder.DropTable(
+                name: "IdentityUserRole<string>");
 
             migrationBuilder.DropTable(
                 name: "Questions");

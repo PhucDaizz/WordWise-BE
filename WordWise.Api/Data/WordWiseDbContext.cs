@@ -22,15 +22,66 @@ namespace WordWise.Api.Data
         {
             base.OnModelCreating(builder);
 
+            var superAdminRoleId = "e95e8a62-fb9b-4b1d-9b64-b36e5805c4f1";
             var adminRoleId = "477d3788-e4b3-4f3d-8dbd-aaead19b78ab";
             var userRoleId = "8bc05967-a01b-424c-a760-475af79c738f";
 
             var roles = new List<IdentityRole>
             {
-                new IdentityRole { Id = adminRoleId, Name = "Admin", NormalizedName = "ADMIN" },
-                new IdentityRole { Id = userRoleId, Name = "User", NormalizedName = "USER" }
+                new IdentityRole { 
+                    Id = superAdminRoleId, 
+                    Name = "SuperAdmin", 
+                    NormalizedName = "SUPERADMIN", 
+                    ConcurrencyStamp = Guid.NewGuid().ToString() 
+                },
+                new IdentityRole { 
+                    Id = adminRoleId, 
+                    Name = "Admin", 
+                    NormalizedName = "ADMIN",
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                },
+                new IdentityRole { 
+                    Id = userRoleId, 
+                    Name = "User", 
+                    NormalizedName = "USER",
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                }
             };
             builder.Entity<IdentityRole>().HasData(roles);
+
+            var superAdminId = "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef";
+            var superAdminUser = new ExtendedIdentityUser
+            {
+                Id = superAdminId,
+                UserName = "admin",
+                NormalizedUserName = "ADMIN",
+                Email = "dai742004.dn@gmail.com",
+                NormalizedEmail = "dai742004.dn@gmail.com".ToUpper(),
+            };
+
+            superAdminUser.PasswordHash = new PasswordHasher<ExtendedIdentityUser>().HashPassword(superAdminUser, "Admin@123");
+            builder.Entity<ExtendedIdentityUser>().HasData(superAdminUser);
+
+            var superAdminRole = new List<IdentityUserRole<string>>
+            {
+                new IdentityUserRole<string> {
+                    RoleId = superAdminRoleId,
+                    UserId = superAdminId,
+                },
+                new IdentityUserRole<string> {
+                    RoleId = adminRoleId,
+                    UserId = superAdminId,
+                },
+                new IdentityUserRole<string> {
+                    RoleId = userRoleId,
+                    UserId = superAdminId,
+                }
+            };
+
+
+            builder.Entity<IdentityUserRole<string>>().HasKey(ur => new { ur.UserId, ur.RoleId });
+            builder.Entity<IdentityUserRole<string>>().HasData(superAdminRole);
+
 
 
             builder.Entity<FlashcardReview>()
@@ -73,14 +124,14 @@ namespace WordWise.Api.Data
                 .WithMany(u => u.MultipleChoiceTests)
                 .HasForeignKey(mt => mt.UserId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<MultipleChoiceTest>()
                 .HasMany(mt => mt.Questions)
                 .WithOne(q => q.MultipleChoiceTest)
                 .HasForeignKey(q => q.MultipleChoiceTestId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
 
         }

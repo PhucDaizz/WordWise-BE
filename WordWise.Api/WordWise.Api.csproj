@@ -23,9 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Models\Dto\" />
-    <Folder Include="Repositories\Interface\" />
-    <Folder Include="Repositories\Implement\" />
   </ItemGroup>
 
 </Project>

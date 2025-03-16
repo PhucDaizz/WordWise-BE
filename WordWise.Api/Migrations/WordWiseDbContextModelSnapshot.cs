@@ -43,15 +43,54 @@ namespace WordWise.Api.Migrations
                     b.HasData(
                         new
                         {
+                            Id = "e95e8a62-fb9b-4b1d-9b64-b36e5805c4f1",
+                            ConcurrencyStamp = "b4365062-08e1-41ee-9b00-c8a7815f6ab6",
+                            Name = "SuperAdmin",
+                            NormalizedName = "SUPERADMIN"
+                        },
+                        new
+                        {
                             Id = "477d3788-e4b3-4f3d-8dbd-aaead19b78ab",
+                            ConcurrencyStamp = "0ec19d70-a0d3-46ee-a0aa-2502443be36c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "8bc05967-a01b-424c-a760-475af79c738f",
+                            ConcurrencyStamp = "c6cdf17f-ef27-4966-8504-ac0f139be323",
                             Name = "User",
                             NormalizedName = "USER"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.ToTable("IdentityUserRole<string>");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef",
+                            RoleId = "e95e8a62-fb9b-4b1d-9b64-b36e5805c4f1"
+                        },
+                        new
+                        {
+                            UserId = "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef",
+                            RoleId = "477d3788-e4b3-4f3d-8dbd-aaead19b78ab"
+                        },
+                        new
+                        {
+                            UserId = "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef",
+                            RoleId = "8bc05967-a01b-424c-a760-475af79c738f"
                         });
                 });
 
@@ -120,6 +159,27 @@ namespace WordWise.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ExtendedIdentityUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c48b7b54-3bd4-483a-9572-2d22321a9237",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "dai742004.dn@gmail.com",
+                            EmailConfirmed = false,
+                            Gender = false,
+                            Level = 0,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DAI742004.DN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEICWsMhv0vtDjWjM5tQcq/8VX4fVH52a2zmPEF1loW0g3sJszs+eeDkr7ap9CaVy3A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d456afd1-67e9-48dc-80f8-f7fc4a57781b",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("WordWise.Api.Models.Domain.Flashcard", b =>
@@ -411,7 +471,7 @@ namespace WordWise.Api.Migrations
                     b.HasOne("WordWise.Api.Models.Domain.ExtendedIdentityUser", "User")
                         .WithMany("MultipleChoiceTests")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -422,7 +482,7 @@ namespace WordWise.Api.Migrations
                     b.HasOne("WordWise.Api.Models.Domain.MultipleChoiceTest", "MultipleChoiceTest")
                         .WithMany("Questions")
                         .HasForeignKey("MultipleChoiceTestId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("MultipleChoiceTest");

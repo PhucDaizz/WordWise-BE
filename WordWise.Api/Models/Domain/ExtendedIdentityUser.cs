@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using WordWise.Api.Models.Enum;
 
 
@@ -8,6 +9,7 @@ namespace WordWise.Api.Models.Domain
     {
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiry { get; set; }
+        [Range(1,6)]
         public LanguageLevel Level { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool Gender { get; set; }
