@@ -12,7 +12,7 @@ namespace WordWise.Api.Models.Domain
         [MaxLength(100)]
         public string Title { get; set; }
         [MaxLength(200)]
-        public string Content { get; set; }
+        public string? Content { get; set; }
         [MaxLength(50)]
         public string LearningLanguage { get; set; }
         [MaxLength(50)]

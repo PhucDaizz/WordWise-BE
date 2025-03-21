@@ -110,7 +110,7 @@ namespace WordWise.Api.Data
                 .WithMany(fs => fs.Flashcards)
                 .HasForeignKey(f => f.FlashcardSetId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<WritingExercise>()
                 .HasOne(we => we.User)

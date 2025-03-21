@@ -44,21 +44,21 @@ namespace WordWise.Api.Migrations
                         new
                         {
                             Id = "e95e8a62-fb9b-4b1d-9b64-b36e5805c4f1",
-                            ConcurrencyStamp = "b4365062-08e1-41ee-9b00-c8a7815f6ab6",
+                            ConcurrencyStamp = "72b5806a-be2b-4d7f-a4b6-86344b9d29c2",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = "477d3788-e4b3-4f3d-8dbd-aaead19b78ab",
-                            ConcurrencyStamp = "0ec19d70-a0d3-46ee-a0aa-2502443be36c",
+                            ConcurrencyStamp = "4366cfb8-a1c8-4aa9-b246-def1356a4b12",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "8bc05967-a01b-424c-a760-475af79c738f",
-                            ConcurrencyStamp = "c6cdf17f-ef27-4966-8504-ac0f139be323",
+                            ConcurrencyStamp = "bac7d741-67ef-4979-8fea-36a85c51fe0d",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -165,7 +165,7 @@ namespace WordWise.Api.Migrations
                         {
                             Id = "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c48b7b54-3bd4-483a-9572-2d22321a9237",
+                            ConcurrencyStamp = "a5f6fc33-88ec-4ba4-9cd8-3c529e30b673",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "dai742004.dn@gmail.com",
                             EmailConfirmed = false,
@@ -174,9 +174,9 @@ namespace WordWise.Api.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "DAI742004.DN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEICWsMhv0vtDjWjM5tQcq/8VX4fVH52a2zmPEF1loW0g3sJszs+eeDkr7ap9CaVy3A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEio3Jht36F+DKC82UuzqEgseqyob2BpMiITkcJa210uKLLsscGfgkmz8pbwFt462g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d456afd1-67e9-48dc-80f8-f7fc4a57781b",
+                            SecurityStamp = "5b821bcb-a9ae-41d6-9fb1-f400d0a7d3ad",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -301,7 +301,6 @@ namespace WordWise.Api.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -390,11 +389,10 @@ namespace WordWise.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AIFeedback")
+                    b.Property<int?>("AIFeedback")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateAt")
@@ -430,7 +428,7 @@ namespace WordWise.Api.Migrations
                     b.HasOne("WordWise.Api.Models.Domain.FlashcardSet", "FlashcardSet")
                         .WithMany("Flashcards")
                         .HasForeignKey("FlashcardSetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("FlashcardSet");

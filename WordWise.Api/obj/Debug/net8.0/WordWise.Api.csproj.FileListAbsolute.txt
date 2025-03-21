@@ -151,3 +151,5 @@ C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\WordWise.Api.pdb
 C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\WordWise.Api.genruntimeconfig.cache
 C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\ref\WordWise.Api.dll
 C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\WordWise.Api.sourcelink.json
+C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\Gemini.NET.dll
+C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\Newtonsoft.Json.dll

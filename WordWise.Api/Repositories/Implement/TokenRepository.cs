@@ -25,7 +25,8 @@ namespace WordWise.Api.Repositories.Implement
         {
             var claim = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, identityUser.Email),
+                new Claim(ClaimTypes.NameIdentifier, identityUser.Id),
+                new Claim(ClaimTypes.Email, identityUser.Email),
                 new Claim(ClaimTypes.Name, identityUser.UserName)
             };
             foreach (var role in roles)

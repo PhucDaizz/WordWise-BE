@@ -10,6 +10,8 @@ using WordWise.Api.Mapping;
 using WordWise.Api.Models.Domain;
 using WordWise.Api.Repositories.Implement;
 using WordWise.Api.Repositories.Interface;
+using WordWise.Api.Services.Implement;
+using WordWise.Api.Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +54,7 @@ builder.Services.AddSwaggerGen(options =>
     });*/
 });
 
+builder.Services.AddMemoryCache();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddDbContext<WordWiseDbContext>(options =>
@@ -64,6 +67,13 @@ builder.Services.AddDbContext<WordWiseDbContext>(options =>
 builder.Services.AddScoped<IFlashCardRepository, FlashCardRepository>();
 builder.Services.AddScoped<IFlashcardSetRepository, FlashcardSetRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddScoped<IFlashcardReviewRepository, FlashcardReviewRepository>();
+
+
+// Register services
+builder.Services.AddSingleton<ICacheService, CacheService>();
+builder.Services.AddScoped<IFlashcardSetService, FlashcardSetService>();
+
 
 builder.Services.AddIdentityCore<ExtendedIdentityUser>()
     .AddRoles<IdentityRole>()
