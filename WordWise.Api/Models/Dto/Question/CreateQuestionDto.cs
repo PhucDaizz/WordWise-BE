@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WordWise.Api.Models.Enum;
 
-namespace WordWise.Api.Models.Domain
+namespace WordWise.Api.Models.Dto.Question
 {
-    public class Question
+    public class CreateQuestionDto
     {
-        [Key]
-        public Guid QuestionId { get; set; }
-        public Guid MultipleChoiceTestId { get; set; }
+        [Required]
+        [MaxLength(2000)]
         public string QuestionText { get; set; }
 
         [MaxLength(500)]
@@ -18,10 +17,9 @@ namespace WordWise.Api.Models.Domain
         public string? Answer_c { get; set; }
         [MaxLength(500)]
         public string? Answer_d { get; set; }
+        [Range(1,4)]
         public AnswerKey? CorrectAnswer { get; set; }
+        [MaxLength(1000)]
         public string? Explanation { get; set; }
-
-        // Navigation property
-        public MultipleChoiceTest MultipleChoiceTest{ get; set; }
     }
 }

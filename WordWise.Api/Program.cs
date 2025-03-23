@@ -68,11 +68,14 @@ builder.Services.AddScoped<IFlashCardRepository, FlashCardRepository>();
 builder.Services.AddScoped<IFlashcardSetRepository, FlashcardSetRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IFlashcardReviewRepository, FlashcardReviewRepository>();
-
+builder.Services.AddScoped<IWritingExerciseRepository, WritingExerciseRepository>();
+builder.Services.AddScoped<IMultipleChoiceTestRepository, MultipleChoiceTestRepository>();
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 
 // Register services
 builder.Services.AddSingleton<ICacheService, CacheService>();
 builder.Services.AddScoped<IFlashcardSetService, FlashcardSetService>();
+builder.Services.AddScoped<IWritingExerciseService, WritingExerciseService>();
 
 
 builder.Services.AddIdentityCore<ExtendedIdentityUser>()

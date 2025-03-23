@@ -3,7 +3,10 @@ using WordWise.Api.Models.Domain;
 using WordWise.Api.Models.Dto.FlashCard;
 using WordWise.Api.Models.Dto.FlashcardReview;
 using WordWise.Api.Models.Dto.FlashCardSet;
+using WordWise.Api.Models.Dto.MultipleChoiceTest;
+using WordWise.Api.Models.Dto.Question;
 using WordWise.Api.Models.Dto.User;
+using WordWise.Api.Models.Dto.WritingExercise;
 
 namespace WordWise.Api.Mapping
 {
@@ -34,6 +37,19 @@ namespace WordWise.Api.Mapping
                 
             // FlashcardReview
             CreateMap<CreateFlashcardReviewDto, FlashcardReview>().ReverseMap();
+
+            // WritingExercise
+            CreateMap<CreateWritingExerciseDto, WritingExercise>().ReverseMap();
+
+            // MultipleChoiceTest
+            CreateMap<CreateMultipleChoiceTest, MultipleChoiceTest>().ReverseMap();
+            CreateMap<MultipleChoiceTest, MultipleChoiceTestDto>()
+                .ForMember(dest => dest.Questions, opt => opt.MapFrom(dest => dest.Questions));
+
+            // Question
+            CreateMap<Question, QuestionDto>().ReverseMap();
+            CreateMap<CreateQuestionDto, Question>().ReverseMap();
+            CreateMap<UpdateQuestionDto, Question>().ReverseMap();
         }
     }
 }

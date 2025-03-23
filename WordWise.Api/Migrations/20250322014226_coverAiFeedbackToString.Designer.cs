@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WordWise.Api.Data;
 
@@ -11,9 +12,11 @@ using WordWise.Api.Data;
 namespace WordWise.Api.Migrations
 {
     [DbContext(typeof(WordWiseDbContext))]
-    partial class WordWiseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250322014226_coverAiFeedbackToString")]
+    partial class coverAiFeedbackToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,21 +47,21 @@ namespace WordWise.Api.Migrations
                         new
                         {
                             Id = "e95e8a62-fb9b-4b1d-9b64-b36e5805c4f1",
-                            ConcurrencyStamp = "31529ce2-077a-4ef7-bd44-60b57640bb87",
+                            ConcurrencyStamp = "8a17f1a2-c899-4fef-bfcc-def7b53267d3",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = "477d3788-e4b3-4f3d-8dbd-aaead19b78ab",
-                            ConcurrencyStamp = "8fa8fd60-da78-4f78-a104-2419ade10a9f",
+                            ConcurrencyStamp = "2df83c08-a1e8-4800-9570-62d129b79b37",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "8bc05967-a01b-424c-a760-475af79c738f",
-                            ConcurrencyStamp = "6efe2bb7-3039-4593-85d5-e906b2e736d1",
+                            ConcurrencyStamp = "3e6d3d28-9272-4642-a3de-cc8fea82c168",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -165,7 +168,7 @@ namespace WordWise.Api.Migrations
                         {
                             Id = "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef2c5f5f-e7ad-46d3-82f5-9e26c19ffae2",
+                            ConcurrencyStamp = "14326238-4ee8-4986-8f8d-e7b8084e1f2e",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "dai742004.dn@gmail.com",
                             EmailConfirmed = false,
@@ -174,9 +177,9 @@ namespace WordWise.Api.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "DAI742004.DN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPIRmnMvm9iVyJHq85Q/+jWUzMRBPQE5sGu7zckZrBz1f3nIpRbJ68OEMDakS6xGyA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE1jNXVDygMXqrbzWkkTxRNTQNNZTfD5epLNP+U5DgUWIDT/8vG/fLwUvapC/N+gTQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "23a67f91-f667-4291-b0e8-00afbf9a9cce",
+                            SecurityStamp = "ad5ef006-d2a3-4b5d-b085-766691b6a065",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -301,7 +304,8 @@ namespace WordWise.Api.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
@@ -320,8 +324,9 @@ namespace WordWise.Api.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Title")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -341,25 +346,30 @@ namespace WordWise.Api.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Answer_a")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Answer_b")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Answer_c")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Answer_d")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("CorrectAnswer")
+                    b.Property<int>("CorrectAnswer")
                         .HasColumnType("int");
 
                     b.Property<string>("Explanation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("MultipleChoiceTestId")

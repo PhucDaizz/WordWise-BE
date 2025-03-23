@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WordWise.Api.Models.Enum;
 
-namespace WordWise.Api.Models.Domain
+namespace WordWise.Api.Models.Dto.Question
 {
-    public class Question
+    public class QuestionDto
     {
-        [Key]
         public Guid QuestionId { get; set; }
         public Guid MultipleChoiceTestId { get; set; }
         public string QuestionText { get; set; }
@@ -20,8 +19,5 @@ namespace WordWise.Api.Models.Domain
         public string? Answer_d { get; set; }
         public AnswerKey? CorrectAnswer { get; set; }
         public string? Explanation { get; set; }
-
-        // Navigation property
-        public MultipleChoiceTest MultipleChoiceTest{ get; set; }
     }
 }

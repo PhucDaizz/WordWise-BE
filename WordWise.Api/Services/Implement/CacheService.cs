@@ -17,15 +17,10 @@ namespace WordWise.Api.Services.Implement
             {
                 throw new ArgumentException("UserId và ApiKey không được để trống.");
             }
+
             string cacheKey = $"GeminiApiKey_{userId}";
 
-            // Check if the cache key already exists
-            if (TryGetApiKey(userId, out _))
-            {
-                return;
-            }
-
-            // Create a cache entry with a sliding expiration of 2 hour
+            // Lưu API key (ghi đè nếu đã tồn tại)
             var cacheOptions = new MemoryCacheEntryOptions
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(2)

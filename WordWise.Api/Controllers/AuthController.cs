@@ -171,14 +171,18 @@ namespace WordWise.Api.Controllers
                 {
                     return BadRequest(new { Message = "GeminiApiKey không được để trống." });
                 }
-                if(_cacheService.TryGetApiKey(userId, out string existingApiKey))
+
+                // Kiểm tra xem API key đã tồn tại chưa
+                if (_cacheService.TryGetApiKey(userId, out string existingApiKey))
                 {
                     return Ok(new { Message = "API key đã tồn tại trong cache.", ApiKey = existingApiKey });
                 }
 
+                // Lưu API key mới
                 _cacheService.StoreApiKey(userId, fillGeminiKeyDto.ApiKey);
 
-                return Ok(new { Message = "API key đã tồn tại trong cache.", ApiKey = existingApiKey });
+                // Trả về thông báo lưu thành công
+                return Ok(new { Message = "API key đã được lưu thành công vào cache.", ApiKey = fillGeminiKeyDto.ApiKey });
             }
             catch (ArgumentException ex)
             {

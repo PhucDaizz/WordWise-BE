@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WordWise.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5ecc10618dd8b72fbe131fbc3f1e01fc667eaa8e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61f49df8e7fc2db9150b5e710ee0310db6ff2a05")]
 [assembly: System.Reflection.AssemblyProductAttribute("WordWise.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WordWise.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

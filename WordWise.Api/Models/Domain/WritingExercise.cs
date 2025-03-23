@@ -10,7 +10,7 @@ namespace WordWise.Api.Models.Domain
         public string UserId { get; set; }
         public string Topic { get; set; }
         public string? Content { get; set; }
-        public int? AIFeedback { get; set; }
+        public string? AIFeedback { get; set; }
 
         [Required]
         [MaxLength(50)]
