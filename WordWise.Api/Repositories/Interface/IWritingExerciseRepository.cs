@@ -9,6 +9,7 @@ namespace WordWise.Api.Repositories.Interface
         Task<bool> DeleteAsync(Guid writingExerciseId, string userId);
         Task<bool> UpdateFeedback(Guid writingExerciseId, string feedback);
         Task<bool> UpdateContent(Guid writingExerciseId, string content);
+        Task<bool> UpdateTopic(Guid writingExerciseId, string topic);
         Task<WritingExercise?> GetByIdAsync(Guid id);
         Task<bool> UpdateAsync(Guid writingExerciseId, string userId , UpdateWritingExercise updateWritingExercise);
 

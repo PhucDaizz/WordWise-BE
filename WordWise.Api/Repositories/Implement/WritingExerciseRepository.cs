@@ -117,5 +117,31 @@ namespace WordWise.Api.Repositories.Implement
             }
         }
 
+        public async Task<bool> UpdateTopic(Guid writingExerciseId, string topic)
+        {
+            // Validate topic
+            if (string.IsNullOrWhiteSpace(topic))
+            {
+                throw new ArgumentException("Topic cannot be null or empty.", nameof(topic));
+            }
+
+            try
+            {
+                var existing = await dbContext.WritingExercises.FirstOrDefaultAsync(x => x.WritingExerciseId == writingExerciseId);
+                if (existing == null)
+                {
+                    return false;
+                }
+
+                existing.Topic = topic;
+                await dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -76,6 +76,7 @@ builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddSingleton<ICacheService, CacheService>();
 builder.Services.AddScoped<IFlashcardSetService, FlashcardSetService>();
 builder.Services.AddScoped<IWritingExerciseService, WritingExerciseService>();
+builder.Services.AddScoped<IMultipleChoiceTestService, MultipleChoiceTestService>();
 
 
 builder.Services.AddIdentityCore<ExtendedIdentityUser>()

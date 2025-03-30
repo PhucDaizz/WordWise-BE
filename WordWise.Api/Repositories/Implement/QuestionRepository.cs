@@ -34,6 +34,34 @@ namespace WordWise.Api.Repositories.Implement
             }
         }
 
+        public async Task<IEnumerable<Question>?> CreateRangeAsync(IList<Question> questions, string userId, Guid multipleChoiceTestId)
+        {
+            var multipleChoiceTest = await _multipleChoiceTestRepository.GetByIdAsync(multipleChoiceTestId);
+            if (multipleChoiceTest == null || multipleChoiceTest.UserId != userId)
+            {
+                return null;
+            }
+            else
+            {
+                foreach (var question in questions)
+                {
+                    question.MultipleChoiceTestId = multipleChoiceTestId;
+                }
+
+                var countQuestions = multipleChoiceTest.Questions.Count();
+                if (countQuestions >= 5)
+                {
+                    return null;
+                }
+                int takeItem = 5 - countQuestions;
+                questions = questions.Take(takeItem).ToList();
+                await dbContext.Questions.AddRangeAsync(questions);
+                await dbContext.SaveChangesAsync();
+
+                return questions;
+            }
+        }
+
         public async Task<bool> DeleteAsync(Guid questionId, string userId)
         {
             var question = await dbContext.Questions
