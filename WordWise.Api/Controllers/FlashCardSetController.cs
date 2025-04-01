@@ -6,6 +6,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Security.Claims;
 using System.Transactions;
 using WordWise.Api.Models.Domain;
+using WordWise.Api.Models.Dto.AI;
 using WordWise.Api.Models.Dto.FlashCardSet;
 using WordWise.Api.Repositories.Interface;
 using WordWise.Api.Services.Interface;
@@ -141,6 +142,96 @@ namespace WordWise.Api.Controllers
             }
 
             return Ok("The status of the FlashcardSet has been successfully changed.");
+        }
+
+
+        [HttpGet]
+        [Route("Explore")]
+        public async Task<IActionResult> Explore([FromQuery] string? learningLanguage, [FromQuery] string? nativeLanguage, [FromQuery] int page = 1, [FromQuery] int itemPerPage = 20)
+        {
+            if (page <= 0 || itemPerPage <= 0)
+            {
+                return BadRequest("Page and items per page must be greater than 0.");
+            }
+            try
+            {
+                var result = await _flashcardSetRepository.GetPublicAsync(learningLanguage, nativeLanguage, page, itemPerPage);
+                if (result == null || result.FlashcardSets == null || !result.FlashcardSets.Any())
+                {
+                    return NotFound("No data found.");
+                }
+                return Ok(result);
+            }
+            catch( ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An unexpected error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet]
+        [Route("GetAll/{userId}")]
+        public async Task<IActionResult> GetAll([FromRoute] string userId, [FromQuery] int page = 1, [FromQuery] int itemPerPage = 5)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("User Id is required.");
+            }
+            var userIdQuery = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var result = await _flashcardSetRepository.GetSummaryAsync(userId, userIdQuery, page, itemPerPage);
+
+            if (result == null)
+            {
+                return NotFound("No data found.");
+            }
+
+            return Ok(result);
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        [Route("GenerateByAI")]
+        public async Task<IActionResult> GenerateByAI([FromBody]GenerateFlashcardSetRequest generateFlashcardSet)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid request data.");
+            }
+
+
+            try{
+                var flashcardSet = mapper.Map<FlashcardSet>(generateFlashcardSet);
+                var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                flashcardSet.UserId = userId;
+                flashcardSet.CreatedAt = DateTime.UtcNow;
+                flashcardSet.UpdatedAt = DateTime.UtcNow;
+                flashcardSet.Description = "Auto generated flashcard set";
+                flashcardSet.IsPublic = true;
+
+                var result = await _flashcardSetService.AutoGenerateByAi(flashcardSet);
+
+                var flashcardSetDto = mapper.Map<FlashcardSetSummaryDto>(result);
+
+                return Ok(flashcardSetDto);
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }   
         }
 
 

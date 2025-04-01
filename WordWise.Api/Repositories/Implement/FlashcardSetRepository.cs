@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WordWise.Api.Data;
 using WordWise.Api.Models.Domain;
+using WordWise.Api.Models.Dto.FlashCardSet;
 using WordWise.Api.Repositories.Interface;
 
 namespace WordWise.Api.Repositories.Implement
@@ -73,6 +74,99 @@ namespace WordWise.Api.Repositories.Implement
                 .Include(x => x.FlashcardReviews)
                 .FirstOrDefaultAsync(fs => fs.FlashcardSetId == flashcardSetId);
             return flashcardSet;
+        }
+
+        public async Task<GetAllFlashCardSetDto> GetPublicAsync(string? learningLanguage, string? nativeLanguage, int currentPage = 1, int itemPerPage = 20)
+        {
+            if (currentPage <= 0 || itemPerPage <= 0)
+            {
+                throw new ArgumentException("Invalid pagination parameters.");
+            }
+            var query = dbContext.FlashcardSets
+                .Where(x => x.IsPublic == true)
+                .AsQueryable();
+
+
+            if (!string.IsNullOrWhiteSpace(learningLanguage))
+            {
+                query = query.Where(x => x.LearningLanguage == learningLanguage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(nativeLanguage))
+            {
+                query = query.Where(x => x.NativeLanguage == nativeLanguage);
+            }
+
+            var totalItems = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling((double)totalItems / itemPerPage);
+
+            var items = await query
+                .Skip((currentPage - 1) * itemPerPage)
+                .Take(itemPerPage)
+                .Select(x => new FlashcardSetSummaryDto
+                {
+                    FlashcardSetId = x.FlashcardSetId,
+                    Title = x.Title,
+                    Description = x.Description,
+                    CreatedAt = x.CreatedAt,
+                    LearningLanguage = x.LearningLanguage,
+                    NativeLanguage = x.NativeLanguage
+                })
+                .ToListAsync();
+            return new GetAllFlashCardSetDto
+            {
+                FlashcardSets = items,
+                CurentPage = currentPage,
+                ItemPerPage = itemPerPage,
+                TotalPage = totalPages
+            };
+        }
+
+        public async Task<GetAllFlashCardSetDto?> GetSummaryAsync(string userIdFind, string? yourUserId, int currentPage = 1, int itemPerPage = 5)
+        {
+            var isOwner = userIdFind == yourUserId;
+            if (userIdFind == null || string.IsNullOrEmpty(userIdFind))
+            {
+                return null;
+            }
+
+            // Query FlashCardSets
+            var query = dbContext.FlashcardSets
+               .Where(x => x.UserId == userIdFind && (isOwner || x.IsPublic))
+               .OrderByDescending(x => x.CreatedAt);
+
+            var totalItems = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling((double)totalItems / itemPerPage);
+
+            // Paging
+            var items = await query
+               .Skip((currentPage - 1) * itemPerPage)
+               .Take(itemPerPage)
+               .Select(x => new FlashcardSetSummaryDto
+               {
+                   FlashcardSetId = x.FlashcardSetId,
+                   Title = x.Title,
+                   Description = x.Description,
+                   CreatedAt = x.CreatedAt,
+                   LearningLanguage = x.LearningLanguage,
+                   NativeLanguage = x.NativeLanguage
+               })
+               .ToListAsync();
+
+            // get username
+            var userName = await dbContext.ExtendedIdentityUsers
+                .Where(x => x.Id == userIdFind)
+                .Select(x => x.UserName)
+                .FirstOrDefaultAsync();
+
+            return new GetAllFlashCardSetDto
+            {
+                FlashcardSets = items,
+                UserName = userName ?? "Unknown",
+                CurentPage = currentPage,
+                ItemPerPage = itemPerPage,
+                TotalPage = totalPages
+            };
         }
 
         public async Task<FlashcardSet?> UpdateAsync(FlashcardSet flashcardSet)

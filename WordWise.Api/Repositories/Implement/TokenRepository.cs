@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -70,9 +71,13 @@ namespace WordWise.Api.Repositories.Implement
 
         public async Task<LoginResponseDto> RefreshToken(RefreshTokenModel refreshToken)
         {
-            var principal = GetTokenPrincipal(refreshToken.Token);
-
             var response = new LoginResponseDto();
+            var principal = GetTokenPrincipal(refreshToken.Token);
+            if (principal == null)
+            {
+                return response; 
+            }
+
             var email = principal?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             if (email is null)
             {
@@ -81,7 +86,7 @@ namespace WordWise.Api.Repositories.Implement
 
             var user = await userManager.FindByEmailAsync(email);
 
-            if (user == null || user.RefreshToken != refreshToken.RefreshToken || user.RefreshTokenExpiry > DateTime.UtcNow)
+            if (user == null || user.RefreshToken != refreshToken.RefreshToken || user.RefreshTokenExpiry < DateTime.UtcNow)
             {
                 return response;
             }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using WordWise.Api.Models.Domain;
+using WordWise.Api.Models.Dto.AI;
 using WordWise.Api.Models.Dto.FlashCard;
 using WordWise.Api.Models.Dto.FlashcardReview;
 using WordWise.Api.Models.Dto.FlashCardSet;
@@ -34,6 +35,9 @@ namespace WordWise.Api.Mapping
                 .ForMember(dest => dest.User, opt => opt.MapFrom(dest => dest.User))
                 .ForMember(dest => dest.flashcardReviews, opt => opt.MapFrom(dest => dest.FlashcardReviews));
             CreateMap<UpdateFlashcardSet, FlashcardSet>().ReverseMap();
+            CreateMap<FlashcardSet, GetAllFlashCardSetDto>().ReverseMap();
+            CreateMap<GenerateFlashcardSetRequest, FlashcardSet>().ReverseMap();
+            CreateMap<FlashcardSetSummaryDto, FlashcardSet>().ReverseMap();
                 
             // FlashcardReview
             CreateMap<CreateFlashcardReviewDto, FlashcardReview>().ReverseMap();
