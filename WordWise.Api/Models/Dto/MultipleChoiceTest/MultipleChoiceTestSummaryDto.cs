@@ -1,4 +1,6 @@
-﻿namespace WordWise.Api.Models.Dto.MultipleChoiceTest
+﻿using WordWise.Api.Models.Domain;
+
+namespace WordWise.Api.Models.Dto.MultipleChoiceTest
 {
     public class MultipleChoiceTestSummaryDto
     {
@@ -8,5 +10,7 @@
         public string NativeLanguage { get; set; }
         public DateTime CreateAt { get; set; }
         public bool IsPublic { get; set; }
+        public int LearnerCount { get; set; }
+        public int Level { get; set; }
     }
 }

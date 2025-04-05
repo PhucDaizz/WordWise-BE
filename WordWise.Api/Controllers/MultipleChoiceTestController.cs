@@ -28,7 +28,7 @@ namespace WordWise.Api.Controllers
 
         [Authorize]
         [HttpPost]
-        [Route("Generate")]
+        [Route("Create")]
         public async Task<IActionResult> Create([FromBody]CreateMultipleChoiceTest createMultipleChoiceTest)
         {
             if (!ModelState.IsValid)
@@ -154,6 +154,7 @@ namespace WordWise.Api.Controllers
                     userId,
                     request.LearningLanguage,
                     request.NativeLanguage,
+                    request.Level,
                     request.Title
                 );
 

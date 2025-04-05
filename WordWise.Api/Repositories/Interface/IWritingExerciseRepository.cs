@@ -12,6 +12,7 @@ namespace WordWise.Api.Repositories.Interface
         Task<bool> UpdateTopic(Guid writingExerciseId, string topic);
         Task<WritingExercise?> GetByIdAsync(Guid id);
         Task<bool> UpdateAsync(Guid writingExerciseId, string userId , UpdateWritingExercise updateWritingExercise);
+        Task<GetAllWritingExcerciseDto?> GetSummaryAsync(string userIdFind, string? yourUserId, int currentPage = 1, int itemPerPage = 5);
 
     }
 }

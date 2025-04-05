@@ -14,5 +14,8 @@ namespace WordWise.Api.Models.Dto.MultipleChoiceTest
         [MaxLength(50)]
         public string NativeLanguage { get; set; }
         public bool IsPublic { get; set; } = true;
+        [Required]
+        [Range(1, 6)]
+        public int Level { get; set; }
     }
 }

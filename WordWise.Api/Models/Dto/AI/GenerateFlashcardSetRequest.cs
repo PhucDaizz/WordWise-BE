@@ -14,6 +14,8 @@ namespace WordWise.Api.Models.Dto.AI
         [Required]
         [MaxLength(50)]
         public string NativeLanguage { get; set; }
-
+        [Required]
+        [Range(1, 6, ErrorMessage = "Level must be between 1 and 6.")]
+        public int Level { get; set; }
     }
 }

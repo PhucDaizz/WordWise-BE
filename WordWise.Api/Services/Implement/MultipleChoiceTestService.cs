@@ -30,7 +30,7 @@ namespace WordWise.Api.Services.Implement
             this.dbContext = dbContext;
         }
 
-        public async Task<MultipleChoiceTest?> GenerateByAIAsync(string userId, string LearningLanguage, string NativeLanguage, string? title)
+        public async Task<MultipleChoiceTest?> GenerateByAIAsync(string userId, string LearningLanguage, string NativeLanguage, int level , string? title)
         {
             if (string.IsNullOrEmpty(userId))
             {
@@ -138,6 +138,7 @@ namespace WordWise.Api.Services.Implement
                     NativeLanguage = NativeLanguage,
                     CreateAt = DateTime.UtcNow,
                     IsPublic = true,
+                    Level = (LanguageLevel)level,
                 }, true);
 
                 // Create questions

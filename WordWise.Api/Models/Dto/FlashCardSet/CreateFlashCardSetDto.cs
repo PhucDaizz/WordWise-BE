@@ -16,5 +16,8 @@ namespace WordWise.Api.Models.Dto.FlashCardSet
         [Required]
         [MaxLength(50)]
         public string NativeLanguage { get; set; }
+        [Required]
+        [Range(1, 6)]
+        public int Level { get; set; }
     }
 }

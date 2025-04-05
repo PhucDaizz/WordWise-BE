@@ -45,6 +45,17 @@ namespace WordWise.Api.Services.Implement
                 throw new ArgumentException("NativeLanguage is missing.");
             }
 
+            var isLimitReached = await dbContext.FlashcardSets
+                .Where(x => x.UserId == flashcardSet.UserId)
+                .Skip(4)
+                .AnyAsync();
+
+            // Check if the user has reached the limit of 5 flashcard sets
+            if (isLimitReached)
+            {
+                throw new InvalidOperationException("You have reached the maximum limit of 5 flashcard sets.");
+            }
+
             // Get API Key
             string apiKey;
             bool hasApiKey = _cacheService.TryGetApiKey(flashcardSet.UserId, out apiKey);
@@ -62,12 +73,12 @@ namespace WordWise.Api.Services.Implement
             }
 
             // Get User Level
-            var userLevel = await dbContext.ExtendedIdentityUsers.FirstOrDefaultAsync(x => x.Id == flashcardSet.UserId);
-            if (userLevel == null)
+            var user = await dbContext.ExtendedIdentityUsers.FirstOrDefaultAsync(x => x.Id == flashcardSet.UserId);
+            if (user == null)
             {
                 throw new InvalidOperationException("User not found.");
             }
-
+            
             // Create flashcard set
             await using var trans = await dbContext.Database.BeginTransactionAsync();
 
@@ -85,7 +96,7 @@ namespace WordWise.Api.Services.Implement
                         - Ngôn ngữ mẹ đẻ: {flashcardSet.NativeLanguage}
                         - Ngôn ngữ học: {flashcardSet.LearningLanguage}
                         - Chủ đề: {flashcardSet.Title ?? "Không có tiêu đề"} (nếu trống, chọn ngẫu nhiên)
-                        - Trình độ: {userLevel.Level} (từ 1 đến 6, với 1 là cơ bản và 6 là nâng cao)
+                        - Trình độ: {flashcardSet.Level} (từ 1 đến 6, với 1 là cơ bản và 6 là nâng cao)
                         - Số lượng: {50}
 
 
@@ -140,6 +151,14 @@ namespace WordWise.Api.Services.Implement
 
         public async Task<FlashcardSet?> DeleteByIdAsync(Guid id, string userId)
         {
+            var existing = await dbContext.FlashcardSets
+                                  .FirstOrDefaultAsync(fs => fs.FlashcardSetId == id && fs.UserId == userId);
+
+            if (existing == null)
+            {
+                return null; 
+            }
+
             await using var trans = await dbContext.Database.BeginTransactionAsync();
             try
             {

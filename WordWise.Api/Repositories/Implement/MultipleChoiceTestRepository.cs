@@ -29,6 +29,7 @@ namespace WordWise.Api.Repositories.Implement
                 }
             }
 
+            multipleChoiceTest.LearnerCount = 0;
             var result = await dbContext.MultipleChoiceTests.AddAsync(multipleChoiceTest);
             await dbContext.SaveChangesAsync();
             return result.Entity;
@@ -54,6 +55,10 @@ namespace WordWise.Api.Repositories.Implement
             {
                 return null;
             }
+
+            existing.LearnerCount++;
+            await dbContext.SaveChangesAsync();
+
             return existing;
         }
 
@@ -91,7 +96,8 @@ namespace WordWise.Api.Repositories.Implement
                     CreateAt = x.CreateAt,
                     LearningLanguage = x.LearningLanguage,
                     NativeLanguage = x.NativeLanguage,
-                    IsPublic = x.IsPublic
+                    IsPublic = x.IsPublic,
+                    LearnerCount = x.LearnerCount ?? 0
                 })
                 .ToListAsync();
 
@@ -106,11 +112,12 @@ namespace WordWise.Api.Repositories.Implement
 
         public async Task<GetAllMultipleChoiceTestDto?> GetSummaryAsync(string userIdFind, string? yourUserId, int currentPage = 1, int itemPerPage = 5)
         {
-            var isOwner = userIdFind == yourUserId;
             if(userIdFind == null || string.IsNullOrEmpty(userIdFind))
             {
                 return null;
             }
+
+            var isOwner = userIdFind == yourUserId;
 
             // Query MultipleChoiceTests 
             var query = dbContext.MultipleChoiceTests
@@ -131,7 +138,9 @@ namespace WordWise.Api.Repositories.Implement
                     CreateAt = x.CreateAt,
                     LearningLanguage = x.LearningLanguage,
                     NativeLanguage = x.NativeLanguage,
-                    IsPublic = x.IsPublic
+                    IsPublic = x.IsPublic,
+                    LearnerCount = x.LearnerCount ?? 0,
+                    Level = (int)x.Level
                 })
                 .ToListAsync();
 

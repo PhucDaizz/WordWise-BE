@@ -14,6 +14,7 @@ namespace WordWise.Api.Models.Dto.MultipleChoiceTest
         public string NativeLanguage { get; set; }
         public DateTime CreateAt { get; set; }
         public bool IsPublic { get; set; } = true;
+        public int Level { get; set; }
         public IEnumerable<QuestionDto> Questions { get; set; }
     }
 }

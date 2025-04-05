@@ -8,5 +8,8 @@
         public string LearningLanguage { get; set; }
         public string NativeLanguage { get; set; }
         public DateTime CreatedAt { get; set; }
+        public int? TotalVocabulary { get; set; }
+        public int? LearnerCount { get; set; }
+        public int Level { get; set; }
     }
 }

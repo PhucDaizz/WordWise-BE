@@ -42,6 +42,8 @@ namespace WordWise.Api.Repositories.Implement
                 return null; 
             }
 
+            flashcardSet.LearnerCount = 0;
+
             var flashcardSetEntry = await dbContext.FlashcardSets.AddAsync(flashcardSet);
             await dbContext.SaveChangesAsync();
             return flashcardSetEntry.Entity;
@@ -66,13 +68,28 @@ namespace WordWise.Api.Repositories.Implement
             return flashcardSets;
         }
 
-        public Task<FlashcardSet?> GetAsync(Guid flashcardSetId)
+        public async Task<FlashcardSet?> GetAsync(Guid flashcardSetId)
         {
-            var flashcardSet = dbContext.FlashcardSets
+            var flashcardSet = await dbContext.FlashcardSets
                 .Include(x => x.Flashcards)
                 .Include(x => x.User)
                 .Include(x => x.FlashcardReviews)
+                    .ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(fs => fs.FlashcardSetId == flashcardSetId);
+
+            if(flashcardSet == null)
+            {
+                return null;
+            }
+
+            if(flashcardSet.LearnerCount == null)
+            {
+                flashcardSet.LearnerCount = 1;
+            }
+
+            flashcardSet.LearnerCount += 1;
+            await dbContext.SaveChangesAsync();
+
             return flashcardSet;
         }
 
@@ -84,6 +101,7 @@ namespace WordWise.Api.Repositories.Implement
             }
             var query = dbContext.FlashcardSets
                 .Where(x => x.IsPublic == true)
+                .Include(x => x.Flashcards)
                 .AsQueryable();
 
 
@@ -110,7 +128,10 @@ namespace WordWise.Api.Repositories.Implement
                     Description = x.Description,
                     CreatedAt = x.CreatedAt,
                     LearningLanguage = x.LearningLanguage,
-                    NativeLanguage = x.NativeLanguage
+                    NativeLanguage = x.NativeLanguage,
+                    TotalVocabulary = x.Flashcards.Count,
+                    LearnerCount = x.LearnerCount ?? 0,
+                    Level = (int)x.Level
                 })
                 .ToListAsync();
             return new GetAllFlashCardSetDto
@@ -133,6 +154,7 @@ namespace WordWise.Api.Repositories.Implement
             // Query FlashCardSets
             var query = dbContext.FlashcardSets
                .Where(x => x.UserId == userIdFind && (isOwner || x.IsPublic))
+               .Include(x => x.Flashcards)
                .OrderByDescending(x => x.CreatedAt);
 
             var totalItems = await query.CountAsync();
@@ -149,7 +171,10 @@ namespace WordWise.Api.Repositories.Implement
                    Description = x.Description,
                    CreatedAt = x.CreatedAt,
                    LearningLanguage = x.LearningLanguage,
-                   NativeLanguage = x.NativeLanguage
+                   NativeLanguage = x.NativeLanguage,
+                   TotalVocabulary = x.Flashcards.Count,
+                   LearnerCount = x.LearnerCount ?? 0,
+                   Level = (int)x.Level
                })
                .ToListAsync();
 
@@ -177,6 +202,7 @@ namespace WordWise.Api.Repositories.Implement
                 return null;
             }
 
+            flashcardSet.LearnerCount = existing.LearnerCount;
             flashcardSet.CreatedAt = existing.CreatedAt;
             flashcardSet.IsPublic = existing.IsPublic;
 

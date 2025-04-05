@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WordWise.Api.Models.Enum;
 
 namespace WordWise.Api.Models.Domain
 {
@@ -19,7 +20,8 @@ namespace WordWise.Api.Models.Domain
         public string LearningLanguage { get; set; }
         [MaxLength(50)]
         public string NativeLanguage { get; set; }
-
+        public int? LearnerCount { get; set; } = 0;
+        public LanguageLevel? Level { get; set; }
         // Navigation properties
         [ForeignKey("UserId")]
         public ExtendedIdentityUser User { get; set; }

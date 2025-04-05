@@ -151,13 +151,6 @@ namespace WordWise.Api.Controllers
         public async Task<IActionResult> GetFeedback([FromRoute]Guid writingExerciseId)
         {
 
-            /*var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Unauthorized("User is not authenticated.");
-            }*/
-
             try
             {
                 var feedback = await _writingExerciseService.GetFeedBackFromAi(writingExerciseId);
@@ -229,6 +222,26 @@ namespace WordWise.Api.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetAll/{userId}")]
+        [Authorize]
+        public async Task<IActionResult> GetAll([FromRoute]string userId, [FromQuery]int page = 1, [FromQuery]int itemPerPage = 5)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("User Id is required.");
+            }
+
+            var userIdQuery = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var writingExercises = await _writingExerciseRepository.GetSummaryAsync(userId, userIdQuery, page, itemPerPage);
+
+            if (writingExercises == null)
+            {
+                return NotFound("No writing exercise found.");
+            }
+            return Ok(writingExercises);
+        }
 
     }
 }

@@ -19,6 +19,7 @@ namespace WordWise.Api.Models.Dto.FlashCardSet
         public string LearningLanguage { get; set; }
         public string NativeLanguage { get; set; }
         public UserDto User { get; set; }
+        public int Level { get; set; }
 
         public ICollection<FlashCardDto> Flashcards { get; set; }
         public ICollection<FlashcardReviewDto> flashcardReviews { get; set; }

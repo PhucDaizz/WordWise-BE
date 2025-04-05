@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WordWise.Api.Data;
 
@@ -11,9 +12,11 @@ using WordWise.Api.Data;
 namespace WordWise.Api.Migrations
 {
     [DbContext(typeof(WordWiseDbContext))]
-    partial class WordWiseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250402091437_AddLearnerCount")]
+    partial class AddLearnerCount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,21 +47,21 @@ namespace WordWise.Api.Migrations
                         new
                         {
                             Id = "e95e8a62-fb9b-4b1d-9b64-b36e5805c4f1",
-                            ConcurrencyStamp = "1386a190-a496-4a04-a1a3-c2deb75c2605",
+                            ConcurrencyStamp = "b2d1aafe-cfe7-44e5-bb0c-7b03f01ef621",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = "477d3788-e4b3-4f3d-8dbd-aaead19b78ab",
-                            ConcurrencyStamp = "73947820-76cc-457b-a643-4352cf2a178f",
+                            ConcurrencyStamp = "94658d41-19a9-4ea6-8631-cc4f29da6aa1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "8bc05967-a01b-424c-a760-475af79c738f",
-                            ConcurrencyStamp = "6c7e9091-a8ba-4241-9316-424542db2fdf",
+                            ConcurrencyStamp = "bf97ff77-7686-4e4a-8f14-2701cbf5ed6b",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -165,7 +168,7 @@ namespace WordWise.Api.Migrations
                         {
                             Id = "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0cbc449d-b787-4ee1-8725-b5c19b49f62c",
+                            ConcurrencyStamp = "6663aeae-a21a-4164-8f9b-057799c134e0",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "dai742004.dn@gmail.com",
                             EmailConfirmed = false,
@@ -174,9 +177,9 @@ namespace WordWise.Api.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "DAI742004.DN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEUMqQdALBNZ6hxFNySuhOXX8EqBmyxYMcoK8oLpKLhxU/o4l5TAnCCIHIZUnFGjUA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEF6U5pJgekb9bQk/EGPTFy/ubeY7RITtHf0vTiqytcCKh3jI+yvqDBPxlmCgLEU3w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f59f7f6a-a405-4d2b-93cf-f75247ad2da2",
+                            SecurityStamp = "9049049c-3482-47b5-b81a-2a5b887d1576",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -273,9 +276,6 @@ namespace WordWise.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("Level")
-                        .HasColumnType("int");
-
                     b.Property<string>("NativeLanguage")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -322,9 +322,6 @@ namespace WordWise.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
 
                     b.Property<string>("NativeLanguage")
                         .IsRequired()
