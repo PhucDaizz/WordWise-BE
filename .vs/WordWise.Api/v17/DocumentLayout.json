@@ -3,20 +3,40 @@
   "WorkspaceRootPath": "C:\\Workspace\\c#\\WordWise.Api\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\controllers\\flashcardsetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\controllers\\flashcardsetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\repositories\\implement\\flashcardsetrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\repositories\\implement\\flashcardsetrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\repositories\\implement\\tokenrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\repositories\\implement\\tokenrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\controllers\\writingexercisecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\controllers\\writingexercisecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\services\\implement\\writingexerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\services\\implement\\writingexerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\controllers\\userlearningstatscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\controllers\\userlearningstatscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\controllers\\multiplechoicetestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\controllers\\multiplechoicetestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\controllers\\contentreportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\controllers\\contentreportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\services\\interface\\imultiplechoicetestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\services\\interface\\imultiplechoicetestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -25,7 +45,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 971,
+          "DockedWidth": 1232,
           "SelectedChildIndex": 3,
           "Children": [
             {
@@ -39,53 +59,111 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "WritingExerciseService.cs",
-              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Services\\Implement\\WritingExerciseService.cs",
-              "RelativeDocumentMoniker": "WordWise.Api\\Services\\Implement\\WritingExerciseService.cs",
-              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Services\\Implement\\WritingExerciseService.cs",
-              "RelativeToolTip": "WordWise.Api\\Services\\Implement\\WritingExerciseService.cs",
-              "ViewState": "AQIAAHQAAAAAAAAAAAAgwHkAAAAqAAAA",
+              "Title": "FlashcardSetRepository.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Repositories\\Implement\\FlashcardSetRepository.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Repositories\\Implement\\FlashcardSetRepository.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Repositories\\Implement\\FlashcardSetRepository.cs",
+              "RelativeToolTip": "WordWise.Api\\Repositories\\Implement\\FlashcardSetRepository.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAgwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T00:43:13.438Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T00:37:21.541Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "FlashCardSetController.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\FlashCardSetController.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Controllers\\FlashCardSetController.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\FlashCardSetController.cs",
+              "RelativeToolTip": "WordWise.Api\\Controllers\\FlashCardSetController.cs",
+              "ViewState": "AQIAADIAAAAAAAAAAAAAADIAAABbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:26:56.679Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TokenRepository.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Repositories\\Implement\\TokenRepository.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Repositories\\Implement\\TokenRepository.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Repositories\\Implement\\TokenRepository.cs",
+              "RelativeToolTip": "WordWise.Api\\Repositories\\Implement\\TokenRepository.cs",
+              "ViewState": "AQIAAEEAAAAAAAAAAAAgwDIAAABAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:15:38.206Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "WordWise.Api\\Controllers\\AuthController.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAACUAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T15:14:41.611Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "WritingExerciseController.cs",
               "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\WritingExerciseController.cs",
               "RelativeDocumentMoniker": "WordWise.Api\\Controllers\\WritingExerciseController.cs",
               "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\WritingExerciseController.cs",
               "RelativeToolTip": "WordWise.Api\\Controllers\\WritingExerciseController.cs",
-              "ViewState": "AQIAAN8AAAAAAAAAAADwv/QAAAAAAAAA",
+              "ViewState": "AQIAAN0AAAAAAAAAAAAcwO4AAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T00:42:13.215Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T14:53:08.932Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IMultipleChoiceTestService.cs",
-              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Services\\Interface\\IMultipleChoiceTestService.cs",
-              "RelativeDocumentMoniker": "WordWise.Api\\Services\\Interface\\IMultipleChoiceTestService.cs",
-              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Services\\Interface\\IMultipleChoiceTestService.cs",
-              "RelativeToolTip": "WordWise.Api\\Services\\Interface\\IMultipleChoiceTestService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAByAAAA",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Program.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Program.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Program.cs",
+              "RelativeToolTip": "WordWise.Api\\Program.cs",
+              "ViewState": "AQIAADYAAAAAAAAAAAAAAJgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T03:01:59.787Z"
+              "WhenOpened": "2025-04-09T11:56:13.823Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MultipleChoiceTestController.cs",
-              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\MultipleChoiceTestController.cs",
-              "RelativeDocumentMoniker": "WordWise.Api\\Controllers\\MultipleChoiceTestController.cs",
-              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\MultipleChoiceTestController.cs",
-              "RelativeToolTip": "WordWise.Api\\Controllers\\MultipleChoiceTestController.cs",
-              "ViewState": "AQIAADYAAAAAAAAAAAAYwIgAAABiAAAA",
+              "DocumentIndex": 5,
+              "Title": "UserLearningStatsController.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\UserLearningStatsController.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Controllers\\UserLearningStatsController.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\UserLearningStatsController.cs",
+              "RelativeToolTip": "WordWise.Api\\Controllers\\UserLearningStatsController.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAADwv4wAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T09:39:24.875Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-09T09:28:19.107Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ContentReportController.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\ContentReportController.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Controllers\\ContentReportController.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\ContentReportController.cs",
+              "RelativeToolTip": "WordWise.Api\\Controllers\\ContentReportController.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAIwHQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T09:27:43.642Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "WordWise.Api\\appsettings.json",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\appsettings.json",
+              "RelativeToolTip": "WordWise.Api\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-08T14:53:20.736Z"
             }
           ]
         }

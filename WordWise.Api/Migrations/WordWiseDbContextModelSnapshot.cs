@@ -38,27 +38,27 @@ namespace WordWise.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentityRole");
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
                         {
                             Id = "e95e8a62-fb9b-4b1d-9b64-b36e5805c4f1",
-                            ConcurrencyStamp = "1386a190-a496-4a04-a1a3-c2deb75c2605",
+                            ConcurrencyStamp = "afbb984b-5fd5-4088-a863-aa69417d1e4d",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = "477d3788-e4b3-4f3d-8dbd-aaead19b78ab",
-                            ConcurrencyStamp = "73947820-76cc-457b-a643-4352cf2a178f",
+                            ConcurrencyStamp = "4000fd53-bc67-4afd-870c-f189535b12b7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "8bc05967-a01b-424c-a760-475af79c738f",
-                            ConcurrencyStamp = "6c7e9091-a8ba-4241-9316-424542db2fdf",
+                            ConcurrencyStamp = "7fe356ea-3dee-474d-9ff0-c46118820f2d",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -74,7 +74,7 @@ namespace WordWise.Api.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.ToTable("IdentityUserRole<string>");
+                    b.ToTable("UserRoles");
 
                     b.HasData(
                         new
@@ -92,6 +92,40 @@ namespace WordWise.Api.Migrations
                             UserId = "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef",
                             RoleId = "8bc05967-a01b-424c-a760-475af79c738f"
                         });
+                });
+
+            modelBuilder.Entity("WordWise.Api.Models.Domain.ContentReport", b =>
+                {
+                    b.Property<Guid>("ContentReportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ContentType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ContentReportId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ContentReports");
                 });
 
             modelBuilder.Entity("WordWise.Api.Models.Domain.ExtendedIdentityUser", b =>
@@ -165,7 +199,7 @@ namespace WordWise.Api.Migrations
                         {
                             Id = "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0cbc449d-b787-4ee1-8725-b5c19b49f62c",
+                            ConcurrencyStamp = "17b9b273-a430-450f-83ab-341de593a4a4",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "dai742004.dn@gmail.com",
                             EmailConfirmed = false,
@@ -174,9 +208,9 @@ namespace WordWise.Api.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "DAI742004.DN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEUMqQdALBNZ6hxFNySuhOXX8EqBmyxYMcoK8oLpKLhxU/o4l5TAnCCIHIZUnFGjUA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENmb96dlY8KLl0LnTQpDVyZhsAgzmftLAooeVGk7mz0k8Y3i9rgoJ78giZ7mZiMbwA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f59f7f6a-a405-4d2b-93cf-f75247ad2da2",
+                            SecurityStamp = "7f71c827-2067-4cab-b0a8-91942be65910",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -388,6 +422,34 @@ namespace WordWise.Api.Migrations
                     b.ToTable("Questions");
                 });
 
+            modelBuilder.Entity("WordWise.Api.Models.Domain.UserLearningStats", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CurrentStreak")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastLearningDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LongestStreak")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("SessionEndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("SessionStartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalLearningMinutes")
+                        .HasColumnType("decimal(10, 2)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("UserLearningStats");
+                });
+
             modelBuilder.Entity("WordWise.Api.Models.Domain.WritingExercise", b =>
                 {
                     b.Property<Guid>("WritingExerciseId")
@@ -426,6 +488,17 @@ namespace WordWise.Api.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("WritingExercises");
+                });
+
+            modelBuilder.Entity("WordWise.Api.Models.Domain.ContentReport", b =>
+                {
+                    b.HasOne("WordWise.Api.Models.Domain.ExtendedIdentityUser", "User")
+                        .WithMany("ContentReports")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WordWise.Api.Models.Domain.Flashcard", b =>
@@ -491,6 +564,17 @@ namespace WordWise.Api.Migrations
                     b.Navigation("MultipleChoiceTest");
                 });
 
+            modelBuilder.Entity("WordWise.Api.Models.Domain.UserLearningStats", b =>
+                {
+                    b.HasOne("WordWise.Api.Models.Domain.ExtendedIdentityUser", "User")
+                        .WithOne("UserLearningStats")
+                        .HasForeignKey("WordWise.Api.Models.Domain.UserLearningStats", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WordWise.Api.Models.Domain.WritingExercise", b =>
                 {
                     b.HasOne("WordWise.Api.Models.Domain.ExtendedIdentityUser", "User")
@@ -504,11 +588,16 @@ namespace WordWise.Api.Migrations
 
             modelBuilder.Entity("WordWise.Api.Models.Domain.ExtendedIdentityUser", b =>
                 {
+                    b.Navigation("ContentReports");
+
                     b.Navigation("FlashcardReviews");
 
                     b.Navigation("FlashcardSets");
 
                     b.Navigation("MultipleChoiceTests");
+
+                    b.Navigation("UserLearningStats")
+                        .IsRequired();
 
                     b.Navigation("WritingExercises");
                 });

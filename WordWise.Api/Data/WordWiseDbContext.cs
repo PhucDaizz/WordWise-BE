@@ -17,6 +17,10 @@ namespace WordWise.Api.Data
         public DbSet<WritingExercise> WritingExercises { get; set; }
         public DbSet<MultipleChoiceTest> MultipleChoiceTests { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<ContentReport> ContentReports { get; set; }
+        public DbSet<UserLearningStats> UserLearningStats { get; set; }
+        public DbSet<IdentityRole> Roles { get; set; }
+        public DbSet<IdentityUserRole<string>> UserRoles { get; set; }
 
         override protected void OnModelCreating(ModelBuilder builder)
         {
@@ -133,6 +137,19 @@ namespace WordWise.Api.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<ContentReport>()
+                .HasOne(cr => cr.User)
+                .WithMany(u => u.ContentReports)
+                .HasForeignKey(cr => cr.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<UserLearningStats>()
+                .HasOne(uls => uls.User)
+                .WithOne(u => u.UserLearningStats)
+                .HasForeignKey<UserLearningStats>(uls => uls.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
     }

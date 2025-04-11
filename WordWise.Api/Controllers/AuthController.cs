@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Caching.Memory;
 using System.Security.Claims;
 using WordWise.Api.Models.Domain;
@@ -22,13 +24,19 @@ namespace WordWise.Api.Controllers
         private readonly IMapper mapper;
         private readonly ITokenRepository tokenRepository;
         private readonly ICacheService _cacheService;
+        private readonly IUserLearningStatsRepository _userLearningStatsRepository;
+        private readonly IAuthRepository _authRepository;
+        private readonly IEmailService _emailService;
 
-        public AuthController(UserManager<ExtendedIdentityUser> userManager, IMapper mapper, ITokenRepository tokenRepository, ICacheService cacheService)
+        public AuthController(UserManager<ExtendedIdentityUser> userManager, IMapper mapper, ITokenRepository tokenRepository, ICacheService cacheService, IUserLearningStatsRepository userLearningStatsRepository, IAuthRepository authRepository, IEmailService emailService)
         {
             this.userManager = userManager;
             this.mapper = mapper;
             this.tokenRepository = tokenRepository;
             _cacheService = cacheService;
+            _userLearningStatsRepository = userLearningStatsRepository;
+            _authRepository = authRepository;
+            _emailService = emailService;
         }
 
         [HttpPost]
@@ -49,7 +57,22 @@ namespace WordWise.Api.Controllers
                 identityResult = await userManager.AddToRoleAsync(user, "User");
                 if (identityResult.Succeeded)
                 {
-                    return Ok();
+                    // Create new UserLearningStats 
+                    var userLearningStats = new UserLearningStats
+                    {
+                        UserId = user.Id,
+                        CurrentStreak = 0,
+                        LongestStreak = 0,
+                        TotalLearningMinutes = 0,
+                        LastLearningDate = null,
+                        SessionStartTime = null,
+                        SessionEndTime = null
+                    };
+
+                    // Save UserLearningStats to the database
+                    await _userLearningStatsRepository.CreateAsync(userLearningStats);
+                    await _emailService.SendEmailConfirmationAsync(user);
+                    return Ok("User created successfully.");
                 }
                 else
                 {
@@ -193,6 +216,101 @@ namespace WordWise.Api.Controllers
                 return StatusCode(500, new { Message = "Đã xảy ra lỗi server.", Detail = ex.Message });
             }
         }
+
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
+        [HttpGet]
+        [Route("get-all-user")]
+        public async Task<IActionResult> GetAllUser([FromQuery] string? emailUser, [FromQuery] string? roleFilter, [FromQuery] int? page = 1, [FromQuery] int? itemPerPage = 20)
+        {
+            try
+            {
+                var listUser = await _authRepository.GetAllUserAsync(emailUser, roleFilter, page ?? 1, itemPerPage ?? 20);
+                return Ok(listUser);
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPassword)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var user = await userManager.FindByEmailAsync(resetPassword.Email);
+            if (user == null)
+            {
+                return BadRequest("No Accounts found with this email");
+            }
+
+            var decodedToken = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(resetPassword.Token));
+            var result = await userManager.ResetPasswordAsync(user, decodedToken!, resetPassword.Password!);
+
+            if (result.Succeeded)
+            {
+                return Ok("Password has been reset");
+            }
+            else
+            {
+                var erroes = result.Errors.Select(x => x.Description);
+                return BadRequest(new { Errors = erroes });
+            }
+        }
+
+
+        [HttpPost("forgotpassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await userManager.FindByEmailAsync(forgotPasswordDTO.Email);
+            if (user == null)
+            {
+                return BadRequest("No Accounts found with this email");
+            }
+
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+            var encodedToken = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(token));
+
+            var param = new Dictionary<string, string>
+            {
+                {"token", encodedToken},
+                {"email", forgotPasswordDTO.Email}
+            };
+
+            var callback = QueryHelpers.AddQueryString(forgotPasswordDTO.ClientUrl, param);
+
+            await _emailService.SendPasswordResetEmailAsync(forgotPasswordDTO.Email, user.UserName, callback);
+
+            return Ok("Reset password link has been sent to your email");
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("confirmemail")]
+        public async Task<IActionResult> ConfirmEmail()
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest("User not found");
+            }
+
+            await _emailService.SendEmailConfirmationAsync(user);
+            return Ok("Email has been sent");
+        }
+
+
+
+
+
 
     }
 }

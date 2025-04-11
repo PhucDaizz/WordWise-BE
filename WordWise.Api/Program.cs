@@ -62,6 +62,17 @@ builder.Services.AddDbContext<WordWiseDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WordWiseConnectionString"));
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+        });
+});
 
 // Register repositories
 builder.Services.AddScoped<IFlashCardRepository, FlashCardRepository>();
@@ -71,12 +82,17 @@ builder.Services.AddScoped<IFlashcardReviewRepository, FlashcardReviewRepository
 builder.Services.AddScoped<IWritingExerciseRepository, WritingExerciseRepository>();
 builder.Services.AddScoped<IMultipleChoiceTestRepository, MultipleChoiceTestRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+builder.Services.AddScoped<IUserLearningStatsRepository, UserLearningStatsRepository>();
+builder.Services.AddScoped<IContentReportRepository, ContentReportRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 // Register services
 builder.Services.AddSingleton<ICacheService, CacheService>();
 builder.Services.AddScoped<IFlashcardSetService, FlashcardSetService>();
 builder.Services.AddScoped<IWritingExerciseService, WritingExerciseService>();
 builder.Services.AddScoped<IMultipleChoiceTestService, MultipleChoiceTestService>();
+builder.Services.AddScoped<IUserLearningStatsService, UserLearningStatsService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 builder.Services.AddIdentityCore<ExtendedIdentityUser>()
@@ -97,7 +113,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
 {
-    options.TokenLifespan = TimeSpan.FromMinutes(5);
+    options.TokenLifespan = TimeSpan.FromMinutes(10);
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -124,6 +140,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 

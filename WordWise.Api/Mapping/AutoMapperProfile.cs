@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WordWise.Api.Models.Domain;
 using WordWise.Api.Models.Dto.AI;
+using WordWise.Api.Models.Dto.ContentReport;
 using WordWise.Api.Models.Dto.FlashCard;
 using WordWise.Api.Models.Dto.FlashcardReview;
 using WordWise.Api.Models.Dto.FlashCardSet;
@@ -78,6 +79,9 @@ namespace WordWise.Api.Mapping
             CreateMap<Question, QuestionDto>().ReverseMap();
             CreateMap<CreateQuestionDto, Question>().ReverseMap();
             CreateMap<UpdateQuestionDto, Question>().ReverseMap();
+
+            // ContentReport
+            CreateMap<ContentReport, CreateContentReportDto>().ReverseMap();
         }
     }
 }
