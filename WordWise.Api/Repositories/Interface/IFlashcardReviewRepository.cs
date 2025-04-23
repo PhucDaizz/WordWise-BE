@@ -6,7 +6,7 @@ namespace WordWise.Api.Repositories.Interface
     {
         Task<FlashcardReview?> CreateAsync(FlashcardReview flashcardReview);
 
-        Task<FlashcardReview?> DeleteByIdAsync(Guid flashcardReviewId, string userId);
+        Task<FlashcardReview?> DeleteByIdAsync(Guid flashcardReviewId, string userId, bool isAdmin = false);
 
         Task<bool> DeleteAllReviewByFlashcardSetIdAsync(Guid flashcardSetId, string userId);
 

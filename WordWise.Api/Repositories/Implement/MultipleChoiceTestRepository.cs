@@ -48,6 +48,58 @@ namespace WordWise.Api.Repositories.Implement
             return true;
         }
 
+        public async Task<GetAllMultipleChoiceTestDto> GetAllAdminAsync(Guid? multipleChoiceTestId, string? learningLanguage, string? nativeLanguage, int page = 1, int itemPerPage = 20)
+        {
+            if (page <= 0 || itemPerPage <= 0)
+            {
+                throw new ArgumentException("Page number and items per page must be positive integers.");
+            }
+
+            var query = dbContext.MultipleChoiceTests.AsNoTracking().AsQueryable();
+
+            if (multipleChoiceTestId.HasValue)
+            {
+                query = query.Where(x => x.MultipleChoiceTestId == multipleChoiceTestId.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(learningLanguage))
+            {
+                query = query.Where(x => x.LearningLanguage == learningLanguage.Trim());
+            }
+
+            if (!string.IsNullOrWhiteSpace(nativeLanguage))
+            {
+                query = query.Where(x => x.NativeLanguage == nativeLanguage.Trim());
+            }
+
+            var totalItems = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling((double)totalItems / itemPerPage);
+
+            var items = await query
+                .Skip((page - 1) * itemPerPage)
+                .Take(itemPerPage)
+                .Select(x => new MultipleChoiceTestSummaryDto
+                {
+                    MultipleChoiceTestId = x.MultipleChoiceTestId,
+                    Title = x.Title,
+                    CreateAt = x.CreateAt,
+                    LearningLanguage = x.LearningLanguage,
+                    NativeLanguage = x.NativeLanguage,
+                    IsPublic = x.IsPublic,
+                    LearnerCount = x.LearnerCount ?? 0
+                })
+                .ToListAsync();
+
+            return new GetAllMultipleChoiceTestDto
+            {
+                multipleChoiceTestSummaries = items,
+                CurentPage = page,
+                ItemPerPage = itemPerPage,
+                TotalPage = totalPages
+            };
+
+        }
+
         public async Task<MultipleChoiceTest?> GetByIdAsync(Guid id)
         {
             var existing = await dbContext.MultipleChoiceTests.Include(x => x.Questions).FirstOrDefaultAsync(x => x.MultipleChoiceTestId == id);

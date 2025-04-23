@@ -100,7 +100,8 @@ namespace WordWise.Api.Controllers
                     return NotFound("FlashCard not found.");
                 }
 
-                return Ok(result);
+                var flcard = mapper.Map<FlashCardDto>(result);
+                return Ok(flcard);
             }
             catch (Exception ex)
             {

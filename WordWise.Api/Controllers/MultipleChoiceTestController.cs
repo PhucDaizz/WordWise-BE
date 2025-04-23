@@ -58,18 +58,28 @@ namespace WordWise.Api.Controllers
 
 
         [HttpGet]
-        [Route("GetById/{MultipleChoiceTestId:Guid}")]
-        public async Task<IActionResult> GetById([FromRoute]Guid MultipleChoiceTestId)
+        [Route("GetById/{multipleChoiceTestId:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute]Guid multipleChoiceTestId)
         {
-            var test = await _multipleChoiceTestRepository.GetByIdAsync(MultipleChoiceTestId);
-            if (test == null)
+            var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var isAdmin = HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("SuperAdmin");
+
+            try
             {
-                return NotFound("This MultipleChoiceTest is not existing!");
+                var test = await _multipleChoiceTestService.GetByIdAsync(multipleChoiceTestId, userId, isAdmin);
+                if (test == null)
+                {
+                    return NotFound("This MultipleChoiceTest is not existing!"); ;
+                }
+                var result = mapper.Map<MultipleChoiceTestDto>(test);
+                
+                return Ok(result);
+
             }
-
-            var result = mapper.Map<MultipleChoiceTestDto>(test);
-
-            return Ok(result);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]
@@ -79,11 +89,13 @@ namespace WordWise.Api.Controllers
         {
             var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
+            var isAdmin = HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("SuperAdmin");
+
             if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized("User is not authenticated.");
             }
-            var result = await _multipleChoiceTestRepository.DeleteAsync(multipleChoiceTestId, userId);
+            var result = await _multipleChoiceTestService.DeleteByIdAsync(multipleChoiceTestId, userId, isAdmin);
             if (!result)
             {
                 return BadRequest("You can not remove this multipleChoiceTest");
@@ -203,6 +215,24 @@ namespace WordWise.Api.Controllers
             }
 
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        [Route("admin/GetAllAdmin")]
+        public async Task<IActionResult> GetAllAdmin([FromQuery]Guid? multipleChoiceTestId, [FromQuery] string? learningLanguage, [FromQuery] string? nativeLanguage, [FromQuery] int page = 1, [FromQuery] int itemPerPage = 20)
+        {
+            try
+            {
+                var result = await _multipleChoiceTestRepository.GetAllAdminAsync(multipleChoiceTestId, learningLanguage, nativeLanguage, page, itemPerPage);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+
 
     }
 }

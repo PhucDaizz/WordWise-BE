@@ -14,6 +14,7 @@ namespace WordWise.Api.Repositories.Interface
         Task<GetAllMultipleChoiceTestDto?> GetSummaryAsync(string userIdFind, string? yourUserId, int currentPage = 1, int itemPerPage = 5);
         Task<bool> SetStatusAsync(Guid multipleChoiceTestId, string userId);
         Task<GetAllMultipleChoiceTestDto> GetPublicAsync(string? learningLanguage, string? nativeLanguage, int currentPage = 1, int itemPerPage = 20);
+        Task<GetAllMultipleChoiceTestDto> GetAllAdminAsync(Guid? multipleChoiceTestId, string? learningLanguage, string? nativeLanguage, int page = 1, int itemPerPage = 20);
 
     }
 }

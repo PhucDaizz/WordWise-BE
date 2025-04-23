@@ -43,9 +43,15 @@ namespace WordWise.Api.Repositories.Implement
             return true; 
         }
 
-        public async Task<FlashcardReview?> DeleteByIdAsync(Guid flashcardReviewId, string userId)
+        public async Task<FlashcardReview?> DeleteByIdAsync(Guid flashcardReviewId, string userId, bool isAdmin = false)
         {
             var existing = dbContext.FlashcardReviews.FirstOrDefault(x => x.FlashcardReviewId == flashcardReviewId);
+
+            if (isAdmin)
+            {
+                userId = existing.UserId;
+            }
+
             if (existing == null || userId != existing.UserId)
             {
                 return null;

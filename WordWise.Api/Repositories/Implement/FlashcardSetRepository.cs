@@ -62,6 +62,65 @@ namespace WordWise.Api.Repositories.Implement
             return flashcardSet;
         }
 
+        public async Task<GetAllFlashCardSetDto> GetAllAdminAsync(
+            Guid? flashcardSetId,
+            string? learningLanguage,
+            string? nativeLanguage,
+            int currentPage = 1,
+            int itemPerPage = 20)
+        {
+            if (currentPage <= 0 || itemPerPage <= 0)
+            {
+                throw new ArgumentException("Page number and items per page must be positive integers.");
+            }
+
+            var query = dbContext.FlashcardSets.AsNoTracking().AsQueryable();
+
+            if (flashcardSetId.HasValue)
+            {
+                query = query.Where(x => x.FlashcardSetId == flashcardSetId.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(learningLanguage))
+            {
+                query = query.Where(x => x.LearningLanguage == learningLanguage.Trim());
+            }
+
+            if (!string.IsNullOrWhiteSpace(nativeLanguage))
+            {
+                query = query.Where(x => x.NativeLanguage == nativeLanguage.Trim());
+            }
+
+            var totalItems = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling((double)totalItems / itemPerPage);
+
+            var items = await query
+                .OrderBy(x => x.CreatedAt) 
+                .Skip((currentPage - 1) * itemPerPage)
+                .Take(itemPerPage)
+                .Select(x => new FlashcardSetSummaryDto
+                {
+                    FlashcardSetId = x.FlashcardSetId,
+                    Title = x.Title,
+                    Description = x.Description,
+                    CreatedAt = x.CreatedAt,
+                    LearningLanguage = x.LearningLanguage,
+                    NativeLanguage = x.NativeLanguage,
+                    TotalVocabulary = x.Flashcards.Count,
+                    LearnerCount = x.LearnerCount ?? 0,
+                    Level = (int)x.Level
+                })
+                .ToListAsync();
+
+            return new GetAllFlashCardSetDto
+            {
+                FlashcardSets = items,
+                CurentPage = currentPage, 
+                ItemPerPage = itemPerPage,
+                TotalPage = totalPages
+            };
+        }
+
         public async Task<IEnumerable<FlashcardSet>> GetAllByUserIdAsync(string userId)
         {
             var flashcardSets = await dbContext.FlashcardSets.Where(fs => fs.UserId == userId).ToListAsync();

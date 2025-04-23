@@ -77,7 +77,7 @@ namespace WordWise.Api.Controllers
         [HttpPut]
         [Authorize]
         [Route("Update/{questionId:Guid}")]
-        public async Task<IActionResult> Update([FromRoute]Guid questionId, [FromBody] UpdateQuestionDto updateQuestionDto)
+        public async Task<IActionResult> Update([FromRoute] Guid questionId, [FromBody] UpdateQuestionDto updateQuestionDto)
         {
             if (!ModelState.IsValid)
             {
@@ -103,6 +103,21 @@ namespace WordWise.Api.Controllers
                 return Ok(mapper.Map<QuestionDto>(result));
             }
         }
+
+        [HttpGet]
+        [Route("GetAll/{multipleChoiceTestId:Guid}")]
+        public async Task<IActionResult> GetAll([FromRoute]Guid multipleChoiceTestId)
+        {
+            var result = await _questionRepository.GetAllAsync(multipleChoiceTestId);
+            if (result == null)
+            {
+                return NotFound("No question found or Empty");
+            }
+            else
+            {
+                return Ok(mapper.Map<List<QuestionDto>>(result));
+            }
+        }   
 
     }
 }

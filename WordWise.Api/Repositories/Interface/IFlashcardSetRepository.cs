@@ -13,5 +13,7 @@ namespace WordWise.Api.Repositories.Interface
         Task<bool> ChangeStatusAsync(Guid flashcardSetId, string userId);
         Task<GetAllFlashCardSetDto> GetPublicAsync(string? learningLanguage, string? nativeLanguage, int currentPage = 1, int itemPerPage = 20);
         Task<GetAllFlashCardSetDto?> GetSummaryAsync(string userIdFind, string? yourUserId, int currentPage = 1, int itemPerPage = 5);
+
+        Task<GetAllFlashCardSetDto> GetAllAdminAsync(Guid? flashcardSetId, string? learningLanguage, string? nativeLanguage , int page = 1, int itemPerPage = 20);
     }
 }

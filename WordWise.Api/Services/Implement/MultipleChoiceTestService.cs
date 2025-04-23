@@ -30,6 +30,26 @@ namespace WordWise.Api.Services.Implement
             this.dbContext = dbContext;
         }
 
+        public async Task<bool> DeleteByIdAsync(Guid multipleChoiceTestId, string userId, bool isAdmin = false)
+        {
+            var existing = isAdmin ?
+                await dbContext.MultipleChoiceTests.FirstOrDefaultAsync(mc => mc.MultipleChoiceTestId == multipleChoiceTestId) :
+                await dbContext.MultipleChoiceTests.FirstOrDefaultAsync(mc => mc.MultipleChoiceTestId == multipleChoiceTestId && mc.UserId == userId);
+
+            if (existing == null)
+            {
+                return false;
+            }
+
+            if (isAdmin)
+            {
+                userId = existing.UserId;
+            }
+
+            var multipleChoiceTest = await _multipleChoiceTestRepository.DeleteAsync(multipleChoiceTestId, userId);
+            return multipleChoiceTest;
+        }
+
         public async Task<MultipleChoiceTest?> GenerateByAIAsync(string userId, string LearningLanguage, string NativeLanguage, int level , string? title)
         {
             if (string.IsNullOrEmpty(userId))
@@ -158,6 +178,25 @@ namespace WordWise.Api.Services.Implement
 
         }
 
+
+        public async Task<MultipleChoiceTest?> GetByIdAsync(Guid multipleChoiceTestId, string? userId, bool isAdmin = false)
+        {
+            var multipleChoiceTest = await _multipleChoiceTestRepository.GetByIdAsync(multipleChoiceTestId);
+            if (multipleChoiceTest == null)
+            {
+                return null;
+            }
+            if (multipleChoiceTest.IsPublic)
+            {
+                return multipleChoiceTest;
+            }
+
+            if (multipleChoiceTest.UserId == userId || isAdmin)
+            {
+                return multipleChoiceTest;
+            }
+            throw new Exception("You do not have permission to access this MultipleChoiceTest.");
+        }
 
         private (string Title, string ReadingText, List<Question> Questions) ParseQuiz(string input)
         {

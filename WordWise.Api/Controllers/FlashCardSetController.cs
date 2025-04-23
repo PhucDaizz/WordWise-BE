@@ -60,9 +60,13 @@ namespace WordWise.Api.Controllers
         [Route("{flashcardSetId:Guid}")]
         public async Task<IActionResult> GetFlashCardSet([FromRoute]Guid flashcardSetId)
         {
+
+            var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var isAdmin = HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("SuperAdmin");
+
             try
             {
-                var flashcardSet = await _flashcardSetRepository.GetAsync(flashcardSetId);
+                var flashcardSet = await _flashcardSetService.GetByIdAsync(flashcardSetId, userId, isAdmin);
                 if (flashcardSet == null)
                 {
                     return NotFound("FlashcardSet is not found!");
@@ -84,11 +88,13 @@ namespace WordWise.Api.Controllers
         {
             var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
+            var isAdmin = HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("SuperAdmin");
+
             if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized("User is not authenticated.");
             }
-            var flashcardSet = await _flashcardSetService.DeleteByIdAsync(id, userId);
+            var flashcardSet = await _flashcardSetService.DeleteByIdAsync(id, userId, isAdmin);
             if (flashcardSet == null)
             {
                 return NotFound("FlashCartSet is not existing");
@@ -235,5 +241,21 @@ namespace WordWise.Api.Controllers
         }
 
 
+        [HttpGet]
+        [Route("admin/GetAllAdmin")]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public async Task<IActionResult> GetAllAdmin([FromQuery]Guid? flashCardSetId, [FromQuery]string? learningLanguage, [FromQuery]string? nativeLanguage, [FromQuery]int page = 1, [FromQuery]int itemPerPage = 20)
+        {
+            try
+            {
+                var result = await _flashcardSetRepository.GetAllAdminAsync(flashCardSetId, learningLanguage, nativeLanguage, page, itemPerPage);
+                return Ok(result);
+            }
+            catch (ArgumentException Ex)
+            {
+                return BadRequest(Ex);
+            }
+
+        }
     }
 }

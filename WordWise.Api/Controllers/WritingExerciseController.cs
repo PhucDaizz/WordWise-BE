@@ -145,7 +145,7 @@ namespace WordWise.Api.Controllers
 
 
         // Get feedback from AI if this writing exercise has been written
-        [HttpGet]
+        [HttpPost]
         [Authorize]
         [Route("GetFeedback/{writingExerciseId:Guid}")]
         public async Task<IActionResult> GetFeedback([FromRoute]Guid writingExerciseId)
@@ -241,6 +241,21 @@ namespace WordWise.Api.Controllers
                 return NotFound("No writing exercise found.");
             }
             return Ok(writingExercises);
+        }
+
+
+        [HttpGet]
+        [Authorize]
+        [Route("GetById/{writingExerciseId:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute]Guid writingExerciseId)
+        {
+            var writing = await _writingExerciseRepository.GetByIdAsync(writingExerciseId);
+            if (writing == null)
+            {
+                return NotFound("Writing exercise not found.");
+            }
+            var result = mapper.Map<WritingExerciseDto>(writing);
+            return Ok(result);
         }
 
     }

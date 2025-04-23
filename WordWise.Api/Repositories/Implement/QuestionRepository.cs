@@ -79,6 +79,18 @@ namespace WordWise.Api.Repositories.Implement
             return true;
         }
 
+        public async Task<IEnumerable<Question>?> GetAllAsync(Guid multipleChoiceTestId)
+        {
+            var questions = await dbContext.Questions
+                .Where(q => q.MultipleChoiceTestId == multipleChoiceTestId)
+                .ToListAsync();
+            if (questions == null || questions.Count == 0)
+            {
+                return null;
+            }
+            return questions;
+        }
+
         public async Task<Question?> UpdateAsync(Question question, string userId)
         {
             var existing = await dbContext.Questions

@@ -149,14 +149,20 @@ namespace WordWise.Api.Services.Implement
 
         }
 
-        public async Task<FlashcardSet?> DeleteByIdAsync(Guid id, string userId)
+        public async Task<FlashcardSet?> DeleteByIdAsync(Guid id, string userId, bool isAdmin = false)
         {
-            var existing = await dbContext.FlashcardSets
-                                  .FirstOrDefaultAsync(fs => fs.FlashcardSetId == id && fs.UserId == userId);
+            var existing = isAdmin ?
+                await dbContext.FlashcardSets.FirstOrDefaultAsync(fs => fs.FlashcardSetId == id):
+                await dbContext.FlashcardSets.FirstOrDefaultAsync(fs => fs.FlashcardSetId == id && fs.UserId == userId);
 
             if (existing == null)
             {
                 return null; 
+            }
+
+            if (isAdmin)
+            {
+                userId = existing.UserId;
             }
 
             await using var trans = await dbContext.Database.BeginTransactionAsync();
@@ -181,6 +187,25 @@ namespace WordWise.Api.Services.Implement
                 await trans.RollbackAsync();
                 throw;
             }
+        }
+
+        public async Task<FlashcardSet?> GetByIdAsync(Guid flashcardSetId, string userId, bool isAdmin = false)
+        {
+            var flashcardSet = await _flashcardSetRepository.GetAsync(flashcardSetId);
+            if (flashcardSet == null)
+            {
+                throw new Exception("FlashcardSet not found.");
+            }
+
+            if (flashcardSet.IsPublic)
+            {
+                return flashcardSet;
+            }
+            if (userId == flashcardSet.UserId || isAdmin == true)
+            {
+                return flashcardSet;
+            }
+            throw new Exception("You do not have permission to access this flashcard set.");
         }
 
         private List<Flashcard?> ParseFlashcards(string input, Guid flashcardSetId)

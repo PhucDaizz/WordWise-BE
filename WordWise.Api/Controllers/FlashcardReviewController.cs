@@ -71,6 +71,8 @@ namespace WordWise.Api.Controllers
         public async Task<IActionResult> DeleteReviewById([FromRoute]Guid flashcardReviewId)
         {
             var userId = HttpContext.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var isAdmin = HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("SuperAdmin");
+
             if(string.IsNullOrWhiteSpace(userId))
             {
                 return Unauthorized("Login again to remove this comment");
@@ -111,7 +113,6 @@ namespace WordWise.Api.Controllers
             }
 
             return Ok(updatedReview);
-
 
         }
     }
