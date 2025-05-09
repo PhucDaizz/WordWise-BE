@@ -7,6 +7,7 @@ using WordWise.Api.Models.Domain;
 using WordWise.Api.Models.Dto.ContentReport;
 using WordWise.Api.Models.Enum;
 using WordWise.Api.Repositories.Interface;
+using WordWise.Api.Services.Interface;
 
 namespace WordWise.Api.Controllers
 {
@@ -16,11 +17,13 @@ namespace WordWise.Api.Controllers
     {
         private readonly IContentReportRepository _contentReportRepository;
         private readonly IMapper mapper;
+        private readonly IContentReportServices _contentReportServices;
 
-        public ContentReportController(IContentReportRepository contentReportRepository, IMapper mapper)
+        public ContentReportController(IContentReportRepository contentReportRepository, IMapper mapper, IContentReportServices contentReportServices)
         {
             _contentReportRepository = contentReportRepository;
             this.mapper = mapper;
+            _contentReportServices = contentReportServices;
         }
 
         [Authorize]
@@ -71,15 +74,27 @@ namespace WordWise.Api.Controllers
         [Route("ApproveReport/{ContentReportId:Guid}")]
         public async Task<IActionResult> ApproveReport([FromRoute]Guid ContentReportId, ReportStatus reportStatus)
         {
-            var result  = await _contentReportRepository.UpdateAsync(ContentReportId, reportStatus);
-            if (result)
+            try
             {
-                return Ok("Set status report successfully.");
+                var result = await _contentReportServices.HandleReport(ContentReportId, reportStatus);
+                if (result)
+                {
+                    return Ok("Set status report successfully.");
+                }
+                else
+                {
+                    return NotFound("The report could not be found or updated.");
+                }
             }
-            else
+            catch (ArgumentException ex)
             {
-                return NotFound("Report not found.");
+                return BadRequest(ex.Message);
             }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+            
         }
 
         [Authorize(Roles = "Admin, SuperAdmin")]
@@ -106,6 +121,35 @@ namespace WordWise.Api.Controllers
                 }
 
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+        }
+
+
+        [HttpDelete]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        [Route("DeleteReport/{ContentReportId:Guid}")]
+        public async Task<IActionResult> DeleteReport([FromRoute]Guid ContentReportId)
+        {
+            if (ContentReportId == Guid.Empty)
+            {
+                return BadRequest("Content report ID cannot be empty.");
+            }
+
+            try
+            {
+                var result = await _contentReportRepository.DeleteAsync(ContentReportId);
+                if (result)
+                {
+                    return Ok("Content report deleted successfully.");
+                }
+                else
+                {
+                    return NotFound("Content report not found.");
+                }
             }
             catch (Exception ex)
             {

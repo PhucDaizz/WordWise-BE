@@ -232,6 +232,14 @@ namespace WordWise.Api.Controllers
             }
             catch (InvalidOperationException e)
             {
+                if (e.Message.Contains("API Key not found"))
+                {
+                    return BadRequest(new { code = "API_KEY_NOT_FOUND", message = e.Message });
+                }
+                else if (e.Message.Contains("maximum limit"))
+                {
+                    return BadRequest(new { code = "LIMIT_REACHED", message = e.Message });
+                }
                 return BadRequest(e.Message);
             }
             catch (Exception ex)

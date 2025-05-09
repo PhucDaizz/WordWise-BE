@@ -181,7 +181,23 @@ namespace WordWise.Api.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                return StatusCode(429, ex.Message); // Rate limit
+                // Phân biệt loại lỗi dựa trên thông báo
+                if (ex.Message.Contains("API Key not found"))
+                {
+                    return StatusCode(404, ex.Message); // 404 - Not Found
+                }
+                else if (ex.Message.Contains("maximum limit") || ex.Message.Contains("5 Multiple Choice Exercise"))
+                {
+                    return StatusCode(403, ex.Message); // 403 - Forbidden
+                }
+                else if (ex.Message.Contains("API key is invalid") || ex.Message.Contains("expired"))
+                {
+                    return StatusCode(401, ex.Message); // 401 - Unauthorized
+                }
+                else
+                {
+                    return StatusCode(429, ex.Message); // 429 - Rate limit
+                }
             }
             catch (Exception ex)
             {

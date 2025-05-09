@@ -7,5 +7,6 @@ namespace WordWise.Api.Services.Interface
         Task<SessionResultDto> StartSessionAsync(string userId);
         Task<SessionResultDto> EndSessionAsync(string userId);
         Task<int> UpdateStreakAsync(string userId);
+        Task<Statistics> GetStatisticsAsync();
     }
 }

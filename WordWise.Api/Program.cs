@@ -67,10 +67,15 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000")
+            /*policy.WithOrigins("http://localhost:3000")
               .AllowAnyMethod()
               .AllowAnyHeader()
-              .AllowCredentials();
+              .AllowCredentials();*/
+
+            policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+
         });
 });
 
@@ -93,6 +98,7 @@ builder.Services.AddScoped<IWritingExerciseService, WritingExerciseService>();
 builder.Services.AddScoped<IMultipleChoiceTestService, MultipleChoiceTestService>();
 builder.Services.AddScoped<IUserLearningStatsService, UserLearningStatsService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IContentReportServices, ContentReportServices>();
 
 
 builder.Services.AddIdentityCore<ExtendedIdentityUser>()
@@ -142,7 +148,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
-
+app.UseAuthentication();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

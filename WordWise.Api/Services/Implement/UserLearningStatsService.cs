@@ -1,4 +1,7 @@
-﻿using WordWise.Api.Models.Dto.UserLearningstats;
+﻿using Microsoft.EntityFrameworkCore;
+using WordWise.Api.Data;
+using WordWise.Api.Models.Domain;
+using WordWise.Api.Models.Dto.UserLearningstats;
 using WordWise.Api.Repositories.Interface;
 using WordWise.Api.Services.Interface;
 
@@ -7,10 +10,12 @@ namespace WordWise.Api.Services.Implement
     public class UserLearningStatsService : IUserLearningStatsService
     {
         private readonly IUserLearningStatsRepository _repository;
+        private readonly WordWiseDbContext _dbContext;
 
-        public UserLearningStatsService(IUserLearningStatsRepository repository)
+        public UserLearningStatsService(IUserLearningStatsRepository repository, WordWiseDbContext dbContext)
         {
             _repository = repository;
+            _dbContext = dbContext;
         }
         public async Task<SessionResultDto> EndSessionAsync(string userId)
         {
@@ -39,6 +44,30 @@ namespace WordWise.Api.Services.Implement
                 CurrentStreak = stats.CurrentStreak,
                 TotalLearningMinutes = stats.TotalLearningMinutes
             };
+        }
+
+        public async Task<Statistics> GetStatisticsAsync()
+        {
+            int totalUsers = await _dbContext.ExtendedIdentityUsers.CountAsync();
+            int totalFlashCardSet = await _dbContext.FlashcardSets.CountAsync();
+            int totalMultichoiceTest = await _dbContext.MultipleChoiceTests.CountAsync();
+            int totalWritingTest = await _dbContext.WritingExercises.CountAsync();
+            int totalReport = await _dbContext.ContentReports.CountAsync();
+
+            double avgTotalLearningMinutes = await _dbContext.UserLearningStats.AverageAsync(x => x.TotalLearningMinutes);
+            double avgCurrentStreak = await _dbContext.UserLearningStats.AverageAsync(x => x.CurrentStreak);
+
+            return new Statistics
+            {
+                TotalUser = totalUsers,
+                TotalFlashcardSet = totalFlashCardSet,
+                TotalMultichoiceTest = totalMultichoiceTest,
+                TotalWritingTest = totalWritingTest,
+                TotalReport = totalReport,
+                AverageTotalLearningMinutes = avgTotalLearningMinutes,
+                AverageCurrentStreak = avgCurrentStreak
+            };
+
         }
 
         public async Task<SessionResultDto> StartSessionAsync(string userId)

@@ -43,6 +43,25 @@ namespace WordWise.Api.Repositories.Implement
             return true;
         }
 
+        public async Task<bool> DeleteDuplicateReports(Guid contentReportId, string contentId)
+        {
+            var reports = await _dbContext.ContentReports.Where(cr => cr.ContentId == contentId).ToListAsync();
+
+            if (reports == null || !reports.Any())
+            {
+                return false;
+            }
+
+            var duplicateReports = reports
+             .Where(cr => cr.ContentReportId != contentReportId)
+             .ToList();
+
+            _dbContext.ContentReports.RemoveRange(duplicateReports);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<GetAllContentReportDto> GetAllAsync(
             Guid? reportId,
             string? userId,
@@ -132,16 +151,16 @@ namespace WordWise.Api.Repositories.Implement
             return report;
         }
 
-        public async Task<bool> UpdateAsync(Guid id, ReportStatus status)
+        public async Task<string?> UpdateAsync(Guid id, ReportStatus status)
         {
             var report = await _dbContext.ContentReports.FirstOrDefaultAsync(cr => cr.ContentReportId == id);
             if (report != null)
             {
                 report.Status = status;
                 await _dbContext.SaveChangesAsync();
-                return true;
+                return report.ContentId;
             }
-            return false;
+            return null;
         }
     }
 }

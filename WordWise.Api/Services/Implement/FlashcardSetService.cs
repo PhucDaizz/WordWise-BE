@@ -69,7 +69,7 @@ namespace WordWise.Api.Services.Implement
             bool isValid = await generator.IsValidApiKeyAsync();
             if (!isValid)
             {
-                throw new InvalidOperationException("API key is invalid or expired.");
+                throw new Exception("API key is invalid or expired.");
             }
 
             // Get User Level

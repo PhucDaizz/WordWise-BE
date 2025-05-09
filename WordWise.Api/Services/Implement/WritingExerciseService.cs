@@ -51,6 +51,16 @@ namespace WordWise.Api.Services.Implement
 
             try
             {
+                string topicInstruction;
+                if (string.IsNullOrEmpty(writingExercise.Topic))
+                {
+                    topicInstruction = "ngẫu nhiên";
+                }
+                else
+                {
+                    topicInstruction = $"liên quan đến chủ đề: **{writingExercise.Topic}**";
+                }
+
                 writingExercise.Topic = "None";
                 var test =  await _writingExerciseRepository.CreateAsync(writingExercise);
                 if (test == null)
@@ -60,7 +70,7 @@ namespace WordWise.Api.Services.Implement
 
                 string prompt =
                     $@"Bạn là một chuyên gia ngôn ngữ và chuyên gia ra đề thi chuẩn quốc tế! 🎓  
-                        Hãy tạo một chủ đề viết luận ngẫu nhiên theo đúng tiêu chuẩn của các kỳ thi ngôn ngữ học thuật (IELTS, TOEFL, Cambridge, v.v.).  
+                        Hãy tạo một chủ đề viết luận {topicInstruction} theo đúng tiêu chuẩn của các kỳ thi ngôn ngữ học thuật (IELTS, TOEFL, Cambridge, v.v.).  
                         Ngôn ngữ yêu cầu: **{writingExercise.LearningLanguage}**.  
                         📌 **Phản hồi của bạn phải theo định dạng sau:**  
 

@@ -43,12 +43,12 @@ namespace WordWise.Api.Controllers
             {
                 return NotFound(e.Message);
             }
-            
+
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating the streak.");
             }
-            
+
         }
 
         [Authorize]
@@ -136,5 +136,26 @@ namespace WordWise.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving the learning report.");
             }
         }
+
+
+        [Authorize(Roles ="Admin, SuperAdmin")]
+        [HttpGet]
+        [Route("Statistics")]
+        public async Task<IActionResult> GetStatistics()
+        {
+            try
+            {
+                var result = await _userLearningStatsService.GetStatisticsAsync();
+                return Ok(result);
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving the statistics.");
+            }
+        }
+
+
+
     }
 }

@@ -70,7 +70,7 @@ namespace WordWise.Api.Services.Implement
             var tests = await dbContext.MultipleChoiceTests.Where(x => x.UserId == userId).CountAsync();
             if(tests >= 5)
             {
-                return null;
+                throw new InvalidOperationException("You have reached the maximum limit of 5 Multiple Choice Exercise.");
             }
 
             // Get API Key

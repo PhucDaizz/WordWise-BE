@@ -45,7 +45,7 @@ namespace WordWise.Api.Services.Implement
         {
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
             var encodedToken = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(token));
-            var confirmationLink = $"http://localhost:5173/verifyemail?userId={user.Id}&token={encodedToken}";
+            var confirmationLink = $"http://localhost:3000/verifyemail?userId={user.Id}&token={encodedToken}";
 
             string htmlBody = GenerateEmailConfirm(user, confirmationLink);
 
