@@ -6,5 +6,6 @@ namespace WordWise.Api.Repositories.Interface
     public interface IAuthRepository
     {
         Task<ListUserDto> GetAllUserAsync(string? emailUser, string? roleFilter, int currentPage = 1, int itemPerPage = 20);
+        Task<InforUserDto?> GetUserByIdAsync(string userId);
     }
 }

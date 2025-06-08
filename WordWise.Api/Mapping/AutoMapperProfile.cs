@@ -7,6 +7,7 @@ using WordWise.Api.Models.Dto.FlashcardReview;
 using WordWise.Api.Models.Dto.FlashCardSet;
 using WordWise.Api.Models.Dto.MultipleChoiceTest;
 using WordWise.Api.Models.Dto.Question;
+using WordWise.Api.Models.Dto.Room;
 using WordWise.Api.Models.Dto.User;
 using WordWise.Api.Models.Dto.WritingExercise;
 
@@ -25,6 +26,7 @@ namespace WordWise.Api.Mapping
             // User
             CreateMap<ExtendedIdentityUser, RegisterDto>().ReverseMap();
             CreateMap<ExtendedIdentityUser, UserDto>().ReverseMap();
+            CreateMap<ExtendedIdentityUser, InforUserDto>().ReverseMap();
 
             // FlashcardReview
             CreateMap<FlashcardReview, FlashcardReviewDto>().ReverseMap();
@@ -88,6 +90,20 @@ namespace WordWise.Api.Mapping
 
             // ContentReport
             CreateMap<ContentReport, CreateContentReportDto>().ReverseMap();
+
+            // Room
+            CreateMap<RoomDto, Room>().ReverseMap();
+            CreateMap<Room, RoomDetailsDto>()
+                .ForMember(dest => dest.Participants, opt => opt.MapFrom(src => src.RoomParticipants))
+                .ForMember(dest => dest.CurrentFlashcard, opt => opt.MapFrom(src => src.FlashcardSet.Flashcards.FirstOrDefault(f => f.FlashcardId == src.CurrentQuestionIndex)));
+            CreateMap<CreateRoomRequestDto, Room>();
+
+            // RoomParticipant
+            CreateMap<RoomParticipantDto, RoomParticipant>().ReverseMap();
+            CreateMap<RoomParticipant, LeaderboardEntryDto>()
+                .ForMember(dest => dest.Rank, opt => opt.Ignore())
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.UserName));
+
         }
     }
 }

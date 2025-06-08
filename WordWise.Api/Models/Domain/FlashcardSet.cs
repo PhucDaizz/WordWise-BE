@@ -27,6 +27,7 @@ namespace WordWise.Api.Models.Domain
         public ExtendedIdentityUser User { get; set; }
         public ICollection<Flashcard> Flashcards { get; set; }
         public ICollection<FlashcardReview> FlashcardReviews { get; set; }
+        public ICollection<Room> Rooms { get; set; }
 
     }
 }

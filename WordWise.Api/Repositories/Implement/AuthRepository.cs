@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WordWise.Api.Data;
 using WordWise.Api.Models.Domain;
@@ -11,11 +12,13 @@ namespace WordWise.Api.Repositories.Implement
     {
         private readonly WordWiseDbContext _dbContext;
         private readonly UserManager<ExtendedIdentityUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public AuthRepository(WordWiseDbContext dbContext, UserManager<ExtendedIdentityUser> userManager)
+        public AuthRepository(WordWiseDbContext dbContext, UserManager<ExtendedIdentityUser> userManager, IMapper mapper)
         {
             _dbContext = dbContext;
             _userManager = userManager;
+            _mapper = mapper;
         }
         public async Task<ListUserDto> GetAllUserAsync(
             string? emailUser,
@@ -79,6 +82,12 @@ namespace WordWise.Api.Repositories.Implement
                 ItemPerPage = itemPerPage,
                 TotalPage = totalPages
             };
+        }
+
+        public async Task<InforUserDto?> GetUserByIdAsync(string userId)
+        {
+            var user = await _dbContext.ExtendedIdentityUsers.FirstOrDefaultAsync(x => x.Id == userId);
+            return _mapper.Map<InforUserDto>(user);
         }
     }
 }

@@ -22,5 +22,7 @@ namespace WordWise.Api.Models.Domain
         public ICollection<MultipleChoiceTest> MultipleChoiceTests { get; set; }
         public ICollection<ContentReport> ContentReports { get; set; }
         public UserLearningStats UserLearningStats { get; set; }
+        public ICollection<RoomParticipant> RoomParticipants { get; set; }
+        public ICollection<Room> Rooms { get; set; }
     }
 }

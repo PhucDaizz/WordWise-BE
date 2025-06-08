@@ -44,21 +44,21 @@ namespace WordWise.Api.Migrations
                         new
                         {
                             Id = "e95e8a62-fb9b-4b1d-9b64-b36e5805c4f1",
-                            ConcurrencyStamp = "afbb984b-5fd5-4088-a863-aa69417d1e4d",
+                            ConcurrencyStamp = "5ea3d794-4c6d-47af-95a8-63a200f9d49c",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = "477d3788-e4b3-4f3d-8dbd-aaead19b78ab",
-                            ConcurrencyStamp = "4000fd53-bc67-4afd-870c-f189535b12b7",
+                            ConcurrencyStamp = "cbcb7f0a-59e4-4da3-a811-d7c859e8f2f5",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "8bc05967-a01b-424c-a760-475af79c738f",
-                            ConcurrencyStamp = "7fe356ea-3dee-474d-9ff0-c46118820f2d",
+                            ConcurrencyStamp = "682f037f-1ded-4274-ac49-267cd877b411",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -199,7 +199,7 @@ namespace WordWise.Api.Migrations
                         {
                             Id = "6ebdbaaf-706e-4d35-9e26-e8ce70a866ef",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "17b9b273-a430-450f-83ab-341de593a4a4",
+                            ConcurrencyStamp = "0a498fcd-9de6-412a-aec7-bfe7431d22f4",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "dai742004.dn@gmail.com",
                             EmailConfirmed = false,
@@ -208,9 +208,9 @@ namespace WordWise.Api.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "DAI742004.DN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAENmb96dlY8KLl0LnTQpDVyZhsAgzmftLAooeVGk7mz0k8Y3i9rgoJ78giZ7mZiMbwA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAM3AwJp3Thau0PKU8seUqIfMiQtYzERiR6B2NUqpDt2dxpCeOXjJSIdlqoEp4WrAg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7f71c827-2067-4cab-b0a8-91942be65910",
+                            SecurityStamp = "0e876eba-7875-4eeb-8f44-adabe39c4e76",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -422,6 +422,141 @@ namespace WordWise.Api.Migrations
                     b.ToTable("Questions");
                 });
 
+            modelBuilder.Entity("WordWise.Api.Models.Domain.Room", b =>
+                {
+                    b.Property<Guid>("RoomId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentQuestionIndex")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("FlashcardSetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("MaxParticipants")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Mode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RoomCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoomName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ShowLeaderboardRealtime")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RoomId");
+
+                    b.HasIndex("FlashcardSetId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("WordWise.Api.Models.Domain.RoomParticipant", b =>
+                {
+                    b.Property<Guid>("RoomParticipantId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CurrentQuestionIndex")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("JoinedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastActivityAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastAnswerSubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RoomParticipantId");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RoomParticipants");
+                });
+
+            modelBuilder.Entity("WordWise.Api.Models.Domain.StudentFlashcardAttempt", b =>
+                {
+                    b.Property<Guid>("AttemptId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AnswerText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FlashcardId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoomParticipantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("TimeTakenMs")
+                        .HasColumnType("int");
+
+                    b.HasKey("AttemptId");
+
+                    b.HasIndex("FlashcardId");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("RoomParticipantId");
+
+                    b.ToTable("StudentFlashcardAttempts");
+                });
+
             modelBuilder.Entity("WordWise.Api.Models.Domain.UserLearningStats", b =>
                 {
                     b.Property<string>("UserId")
@@ -564,6 +699,71 @@ namespace WordWise.Api.Migrations
                     b.Navigation("MultipleChoiceTest");
                 });
 
+            modelBuilder.Entity("WordWise.Api.Models.Domain.Room", b =>
+                {
+                    b.HasOne("WordWise.Api.Models.Domain.FlashcardSet", "FlashcardSet")
+                        .WithMany("Rooms")
+                        .HasForeignKey("FlashcardSetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WordWise.Api.Models.Domain.ExtendedIdentityUser", "User")
+                        .WithMany("Rooms")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("FlashcardSet");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WordWise.Api.Models.Domain.RoomParticipant", b =>
+                {
+                    b.HasOne("WordWise.Api.Models.Domain.Room", "Room")
+                        .WithMany("RoomParticipants")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WordWise.Api.Models.Domain.ExtendedIdentityUser", "User")
+                        .WithMany("RoomParticipants")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WordWise.Api.Models.Domain.StudentFlashcardAttempt", b =>
+                {
+                    b.HasOne("WordWise.Api.Models.Domain.Flashcard", "Flashcard")
+                        .WithMany("StudentFlashcardAttempts")
+                        .HasForeignKey("FlashcardId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WordWise.Api.Models.Domain.Room", "Room")
+                        .WithMany("StudentFlashcardAttempts")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("WordWise.Api.Models.Domain.RoomParticipant", "RoomParticipant")
+                        .WithMany("StudentFlashcardAttempts")
+                        .HasForeignKey("RoomParticipantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Flashcard");
+
+                    b.Navigation("Room");
+
+                    b.Navigation("RoomParticipant");
+                });
+
             modelBuilder.Entity("WordWise.Api.Models.Domain.UserLearningStats", b =>
                 {
                     b.HasOne("WordWise.Api.Models.Domain.ExtendedIdentityUser", "User")
@@ -596,10 +796,19 @@ namespace WordWise.Api.Migrations
 
                     b.Navigation("MultipleChoiceTests");
 
+                    b.Navigation("RoomParticipants");
+
+                    b.Navigation("Rooms");
+
                     b.Navigation("UserLearningStats")
                         .IsRequired();
 
                     b.Navigation("WritingExercises");
+                });
+
+            modelBuilder.Entity("WordWise.Api.Models.Domain.Flashcard", b =>
+                {
+                    b.Navigation("StudentFlashcardAttempts");
                 });
 
             modelBuilder.Entity("WordWise.Api.Models.Domain.FlashcardSet", b =>
@@ -607,11 +816,25 @@ namespace WordWise.Api.Migrations
                     b.Navigation("FlashcardReviews");
 
                     b.Navigation("Flashcards");
+
+                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("WordWise.Api.Models.Domain.MultipleChoiceTest", b =>
                 {
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("WordWise.Api.Models.Domain.Room", b =>
+                {
+                    b.Navigation("RoomParticipants");
+
+                    b.Navigation("StudentFlashcardAttempts");
+                });
+
+            modelBuilder.Entity("WordWise.Api.Models.Domain.RoomParticipant", b =>
+                {
+                    b.Navigation("StudentFlashcardAttempts");
                 });
 #pragma warning restore 612, 618
         }

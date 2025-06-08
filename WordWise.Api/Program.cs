@@ -5,7 +5,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using WordWise.Api.BackgroundServices;
 using WordWise.Api.Data;
+using WordWise.Api.Hubs;
 using WordWise.Api.Mapping;
 using WordWise.Api.Models.Domain;
 using WordWise.Api.Repositories.Implement;
@@ -53,7 +55,10 @@ builder.Services.AddSwaggerGen(options =>
         }
     });*/
 });
-
+builder.Services.AddSignalR(options =>
+{
+    options.EnableDetailedErrors = true;
+});
 builder.Services.AddMemoryCache();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
@@ -67,15 +72,14 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            /*policy.WithOrigins("http://localhost:3000")
+            policy.WithOrigins("http://localhost:3000")
               .AllowAnyMethod()
               .AllowAnyHeader()
-              .AllowCredentials();*/
+              .AllowCredentials();
 
-            policy.AllowAnyOrigin()
+            /*policy.AllowAnyOrigin()
               .AllowAnyMethod()
-              .AllowAnyHeader();
-
+              .AllowAnyHeader();*/
         });
 });
 
@@ -90,6 +94,11 @@ builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<IUserLearningStatsRepository, UserLearningStatsRepository>();
 builder.Services.AddScoped<IContentReportRepository, ContentReportRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IRoomParticipantRepository, RoomParticipantRepository>();
+builder.Services.AddScoped<IStudentFlashcardAttemptRepository, StudentFlashcardAttemptRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
 // Register services
 builder.Services.AddSingleton<ICacheService, CacheService>();
@@ -99,6 +108,8 @@ builder.Services.AddScoped<IMultipleChoiceTestService, MultipleChoiceTestService
 builder.Services.AddScoped<IUserLearningStatsService, UserLearningStatsService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IContentReportServices, ContentReportServices>();
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IRoomDataCleaner, RoomDataCleaner>();
 
 
 builder.Services.AddIdentityCore<ExtendedIdentityUser>()
@@ -135,7 +146,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    (path.StartsWithSegments("/roomhub", StringComparison.OrdinalIgnoreCase))) 
+                {
+                    
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
+
+
+builder.Services.AddHostedService<OldRoomDataCleanupService>();
 
 
 var app = builder.Build();
@@ -154,5 +185,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<RoomHub>("/roomhub");
 
 app.Run();

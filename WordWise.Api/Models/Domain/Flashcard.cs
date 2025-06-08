@@ -16,6 +16,7 @@ namespace WordWise.Api.Models.Domain
         // Navigation property
         [ForeignKey("FlashcardSetId")]
         public FlashcardSet FlashcardSet { get; set; }
+        public ICollection<StudentFlashcardAttempt> StudentFlashcardAttempts { get; set; }
 
     }
 }

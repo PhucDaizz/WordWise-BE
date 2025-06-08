@@ -21,6 +21,9 @@ namespace WordWise.Api.Data
         public DbSet<UserLearningStats> UserLearningStats { get; set; }
         public DbSet<IdentityRole> Roles { get; set; }
         public DbSet<IdentityUserRole<string>> UserRoles { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<RoomParticipant> RoomParticipants { get; set; }
+        public DbSet<StudentFlashcardAttempt> StudentFlashcardAttempts { get; set; }
 
         override protected void OnModelCreating(ModelBuilder builder)
         {
@@ -151,6 +154,55 @@ namespace WordWise.Api.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
+           builder.Entity<Room>()
+                .HasMany(r => r.RoomParticipants)
+                .WithOne(rp => rp.Room)
+                .HasForeignKey(rp => rp.RoomId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Room>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.Rooms)
+                .HasForeignKey(r => r.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Room>()
+                .HasOne(r => r.FlashcardSet)
+                .WithMany(fs => fs.Rooms)
+                .HasForeignKey(r => r.FlashcardSetId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<RoomParticipant>()
+                .HasMany(rp => rp.StudentFlashcardAttempts)
+                .WithOne(sfa => sfa.RoomParticipant)
+                .HasForeignKey(sfa => sfa.RoomParticipantId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<RoomParticipant>()
+                .HasOne(rp => rp.User)
+                .WithMany(u => u.RoomParticipants)
+                .HasForeignKey(rp => rp.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<StudentFlashcardAttempt>()
+                .HasOne(sfa => sfa.Flashcard)
+                .WithMany(f => f.StudentFlashcardAttempts)
+                .HasForeignKey(sfa => sfa.FlashcardId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<StudentFlashcardAttempt>()
+                .HasOne(sfa => sfa.Room)
+                .WithMany(r => r.StudentFlashcardAttempts)
+                .HasForeignKey(sfa => sfa.RoomId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+            
         }
     }
 }
