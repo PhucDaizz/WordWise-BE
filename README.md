@@ -1,3 +1,6 @@
+<img src="https://iili.io/Ffa7w5G.png" alt="Demo IMG" style="max-width: 100%; height: auto;" />
+
+# 🚗 Hệ thống Nhận diện Biển số xe Việt Nam (Vietnamese License Plate Recognition System)
 # WordWise - Language Learning Platform
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![.NET Core](https://img.shields.io/badge/.NET%20Core-8.0-blueviolet.svg)](https://dotnet.microsoft.com/download/dotnet/8.0)
