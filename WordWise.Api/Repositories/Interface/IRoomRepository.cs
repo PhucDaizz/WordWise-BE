@@ -3,7 +3,7 @@ using WordWise.Api.Models.Domain;
 
 namespace WordWise.Api.Repositories.Interface
 {
-    public interface IRoomRepository 
+    public interface IRoomRepository
     {
         Task<Room?> GetByIdAsync(Guid roomId);
         Task<Room?> GetByRoomCodeAsync(string roomCode);
@@ -16,8 +16,9 @@ namespace WordWise.Api.Repositories.Interface
             string? includePropertiesString = null);
         Task<IEnumerable<Room>> GetActiveRoomsWithNoRecentActivityAsync(TimeSpan inactivityThreshold);
         Task<IEnumerable<Room>> GetFinishedRoomsOlderThanAsync(TimeSpan retentionPeriod);
+        Task<IEnumerable<Room>> GetWaitingRoomsOlderThanAsync(TimeSpan retentionPeriod);
         Task AddAsync(Room room);
-        void Update(Room room); // EF Core theo dõi, không cần async
+        void Update(Room room); 
         void Remove(Room room);
         Task<bool> AnyAsync(Expression<Func<Room, bool>> predicate);
     }

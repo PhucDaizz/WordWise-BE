@@ -5,5 +5,6 @@
         public RoomDto RoomInfo { get; set; } = null!;
         public RoomParticipantDto ParticipantInfo { get; set; } = null!;
         public FlashcardQuestionDto? CurrentQuestion { get; set; }
+        public IEnumerable<RoomParticipantDto>? CurrentParticipantsInRoom { get; set; }
     }
 }

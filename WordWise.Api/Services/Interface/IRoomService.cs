@@ -14,6 +14,7 @@ namespace WordWise.Api.Services.Interface
         Task<ServiceResult> FinishRoomAsync(Guid roomId, Guid teacherId, bool triggeredByNoMoreQuestions = false);
         Task<IEnumerable<LeaderboardEntryDto>> GetLeaderboarAsync(Guid roomId);
         Task<bool> IsUserParticipantInRoomAsync(Guid roomId, Guid userId);
+        Task<UserLeftRoomDetailDto?> HandleUserDisconnectAsync(Guid userId, string connectionId);
 
     }
 }

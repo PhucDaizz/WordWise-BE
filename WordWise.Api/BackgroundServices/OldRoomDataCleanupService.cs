@@ -8,8 +8,9 @@ namespace WordWise.Api.BackgroundServices
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<OldRoomDataCleanupService> _logger;
-        private readonly TimeSpan _retentionPeriod = TimeSpan.FromMinutes(2); 
-        private readonly TimeSpan _checkInterval = TimeSpan.FromMinutes(1);
+        private readonly TimeSpan _retentionPeriod = TimeSpan.FromMinutes(2);
+        private readonly TimeSpan _checkTimePending = TimeSpan.FromMinutes(40);
+        private readonly TimeSpan _checkInterval = TimeSpan.FromMinutes(15);
 
         public OldRoomDataCleanupService(IServiceProvider serviceProvider, ILogger<OldRoomDataCleanupService> logger)
         {
@@ -37,9 +38,13 @@ namespace WordWise.Api.BackgroundServices
                         // Lấy danh sách các phòng đã hoàn thành và quá thời gian lưu trữ
                         var roomsToClean = await roomRepository.GetFinishedRoomsOlderThanAsync(_retentionPeriod);
 
-                        if (roomsToClean.Any())
+                        // Lấy danh sách các phòng đang trong tình trạng chờ quá lâu
+                        var waitingRooms = await roomRepository.GetWaitingRoomsOlderThanAsync(_checkTimePending);
+
+                        if (roomsToClean.Any() || waitingRooms.Any())
                         {
                             _logger.LogInformation("Found {Count} old rooms to clean up.", roomsToClean.Count());
+                            _logger.LogInformation("Found {Count} rooms to clean up in status pending too long.", roomsToClean.Count());
                             foreach (var room in roomsToClean)
                             {
                                 if (stoppingToken.IsCancellationRequested) break; // Kiểm tra trước mỗi lần xóa
@@ -47,6 +52,15 @@ namespace WordWise.Api.BackgroundServices
                                 _logger.LogInformation("Cleaning up Room ID: {RoomId}, Ended At: {EndTime}", room.RoomId, room.EndTime);
                                 await roomDataCleaner.CleanUpRoomDataAsync(room.RoomId);
                             }
+
+                            foreach (var room in waitingRooms)
+                            {
+                                if (stoppingToken.IsCancellationRequested) break;
+
+                                _logger.LogInformation("Cleaning up waiting Room ID: {RoomId}, Created At: {CreatedTime}", room.RoomId, room.CreatedAt);
+                                await roomDataCleaner.CleanUpRoomDataAsync(room.RoomId);
+                            }
+
                             _logger.LogInformation("Finished cleaning up old rooms for this cycle.");
                         }
                         else
@@ -69,13 +83,14 @@ namespace WordWise.Api.BackgroundServices
                     _logger.LogInformation("OldRoomDataCleanupService waiting for {CheckInterval} before next cycle.", _checkInterval);
                     await Task.Delay(_checkInterval, stoppingToken);
                 }
-                catch (TaskCanceledException) 
+                catch (TaskCanceledException)
                 {
                     _logger.LogInformation("OldRoomDataCleanupService delay was canceled, service is stopping.");
-                    break; 
+                    break;
                 }
             }
             _logger.LogInformation("OldRoomDataCleanupService has stopped.");
         }
     }
 }
+

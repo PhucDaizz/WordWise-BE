@@ -3,40 +3,36 @@
   "WorkspaceRootPath": "C:\\Workspace\\c#\\WordWise.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\controllers\\roomscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\controllers\\roomscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\models\\dto\\room\\userleftroomdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\models\\dto\\room\\userleftroomdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\models\\dto\\room\\joinroomresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\models\\dto\\room\\joinroomresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\hubs\\roomhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\hubs\\roomhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\backgroundservices\\oldroomdatacleanupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\backgroundservices\\oldroomdatacleanupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\services\\interface\\iroomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\services\\interface\\iroomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\repositories\\interface\\iunitofwork .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\repositories\\interface\\iunitofwork .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\services\\implement\\roomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\services\\implement\\roomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\services\\implement\\roomdatacleaner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\services\\implement\\roomdatacleaner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\repositories\\interface\\iroomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\repositories\\interface\\iroomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\repositories\\implement\\roomparticipantrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\repositories\\implement\\roomparticipantrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\models\\domain\\roomparticipant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\models\\domain\\roomparticipant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\models\\domain\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\models\\domain\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|c:\\workspace\\c#\\wordwise.api\\wordwise.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58B031AB-6249-436E-9034-08BA43B2F81D}|WordWise.Api\\WordWise.Api.csproj|solutionrelative:wordwise.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -45,8 +41,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 1232,
-          "SelectedChildIndex": 4,
+          "DockedWidth": 1335,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,112 +54,107 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RoomsController.cs",
-              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\RoomsController.cs",
-              "RelativeDocumentMoniker": "WordWise.Api\\Controllers\\RoomsController.cs",
-              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\RoomsController.cs",
-              "RelativeToolTip": "WordWise.Api\\Controllers\\RoomsController.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAAwBoAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T03:05:09.148Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IUnitOfWork .cs",
-              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Repositories\\Interface\\IUnitOfWork .cs",
-              "RelativeDocumentMoniker": "WordWise.Api\\Repositories\\Interface\\IUnitOfWork .cs",
-              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Repositories\\Interface\\IUnitOfWork .cs",
-              "RelativeToolTip": "WordWise.Api\\Repositories\\Interface\\IUnitOfWork .cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T07:44:27.188Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Program.cs",
               "RelativeDocumentMoniker": "WordWise.Api\\Program.cs",
               "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Program.cs",
               "RelativeToolTip": "WordWise.Api\\Program.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAADwvxEAAAAxAAAA",
+              "ViewState": "AQIAAJYAAAAAAAAAAAAAAC4AAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T03:34:43.808Z",
+              "WhenOpened": "2025-06-16T07:07:04.04Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RoomsController.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\RoomsController.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Controllers\\RoomsController.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Controllers\\RoomsController.cs",
+              "RelativeToolTip": "WordWise.Api\\Controllers\\RoomsController.cs",
+              "ViewState": "AQIAALEAAAAAAAAAAADwv8sAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T01:55:36.6Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "RoomParticipantRepository.cs",
-              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Repositories\\Implement\\RoomParticipantRepository.cs",
-              "RelativeDocumentMoniker": "WordWise.Api\\Repositories\\Implement\\RoomParticipantRepository.cs",
-              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Repositories\\Implement\\RoomParticipantRepository.cs",
-              "RelativeToolTip": "WordWise.Api\\Repositories\\Implement\\RoomParticipantRepository.cs",
-              "ViewState": "AQIAACIAAAAAAAAAAAAkwD0AAAAfAAAA",
+              "Title": "IRoomRepository.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Repositories\\Interface\\IRoomRepository.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Repositories\\Interface\\IRoomRepository.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Repositories\\Interface\\IRoomRepository.cs",
+              "RelativeToolTip": "WordWise.Api\\Repositories\\Interface\\IRoomRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T03:36:01.636Z"
+              "WhenOpened": "2025-06-12T04:10:32.332Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "RoomParticipant.cs",
-              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Models\\Domain\\RoomParticipant.cs",
-              "RelativeDocumentMoniker": "WordWise.Api\\Models\\Domain\\RoomParticipant.cs",
-              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Models\\Domain\\RoomParticipant.cs",
-              "RelativeToolTip": "WordWise.Api\\Models\\Domain\\RoomParticipant.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAIBJwA0AAAA7AAAA",
+              "DocumentIndex": 5,
+              "Title": "RoomService.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Services\\Implement\\RoomService.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Services\\Implement\\RoomService.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Services\\Implement\\RoomService.cs",
+              "RelativeToolTip": "WordWise.Api\\Services\\Implement\\RoomService.cs",
+              "ViewState": "AQIAAE4BAAAAAAAAAADwv4EAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T02:19:07.383Z"
+              "WhenOpened": "2025-06-16T02:05:40.203Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Room.cs",
-              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Models\\Domain\\Room.cs",
-              "RelativeDocumentMoniker": "WordWise.Api\\Models\\Domain\\Room.cs",
-              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Models\\Domain\\Room.cs",
-              "RelativeToolTip": "WordWise.Api\\Models\\Domain\\Room.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAtAAAA",
+              "DocumentIndex": 4,
+              "Title": "IRoomService.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Services\\Interface\\IRoomService.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Services\\Interface\\IRoomService.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Services\\Interface\\IRoomService.cs",
+              "RelativeToolTip": "WordWise.Api\\Services\\Interface\\IRoomService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAABIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T02:02:45.103Z"
+              "WhenOpened": "2025-06-16T04:26:16.825Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "RoomHub.cs",
               "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Hubs\\RoomHub.cs",
               "RelativeDocumentMoniker": "WordWise.Api\\Hubs\\RoomHub.cs",
               "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Hubs\\RoomHub.cs",
               "RelativeToolTip": "WordWise.Api\\Hubs\\RoomHub.cs",
-              "ViewState": "AQIAAEcAAAAAAAAAAAAgwFsAAAA8AAAA",
+              "ViewState": "AQIAAGYAAAAAAAAAAAA7wFoAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T02:44:09.539Z"
+              "WhenOpened": "2025-06-16T01:49:46.176Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RoomDataCleaner.cs",
-              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Services\\Implement\\RoomDataCleaner.cs",
-              "RelativeDocumentMoniker": "WordWise.Api\\Services\\Implement\\RoomDataCleaner.cs",
-              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Services\\Implement\\RoomDataCleaner.cs",
-              "RelativeToolTip": "WordWise.Api\\Services\\Implement\\RoomDataCleaner.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAlAAAA",
+              "DocumentIndex": 2,
+              "Title": "JoinRoomResponseDto.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Models\\Dto\\Room\\JoinRoomResponseDto.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Models\\Dto\\Room\\JoinRoomResponseDto.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Models\\Dto\\Room\\JoinRoomResponseDto.cs",
+              "RelativeToolTip": "WordWise.Api\\Models\\Dto\\Room\\JoinRoomResponseDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T02:26:30.376Z"
+              "WhenOpened": "2025-06-16T04:08:03.113Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "OldRoomDataCleanupService.cs",
-              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\BackgroundServices\\OldRoomDataCleanupService.cs",
-              "RelativeDocumentMoniker": "WordWise.Api\\BackgroundServices\\OldRoomDataCleanupService.cs",
-              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\BackgroundServices\\OldRoomDataCleanupService.cs",
-              "RelativeToolTip": "WordWise.Api\\BackgroundServices\\OldRoomDataCleanupService.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAYwDoAAAARAAAA",
+              "DocumentIndex": 1,
+              "Title": "UserLeftRoomDetailDto.cs",
+              "DocumentMoniker": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Models\\Dto\\Room\\UserLeftRoomDetailDto.cs",
+              "RelativeDocumentMoniker": "WordWise.Api\\Models\\Dto\\Room\\UserLeftRoomDetailDto.cs",
+              "ToolTip": "C:\\Workspace\\c#\\WordWise.Api\\WordWise.Api\\Models\\Dto\\Room\\UserLeftRoomDetailDto.cs",
+              "RelativeToolTip": "WordWise.Api\\Models\\Dto\\Room\\UserLeftRoomDetailDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-20T05:26:48.18Z"
+              "WhenOpened": "2025-06-16T04:35:31.297Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -117,8 +117,18 @@ namespace WordWise.Api.Repositories.Implement
                 .Include(r => r.User)
                 .Include(r => r.FlashcardSet)
                 .Include(r => r.RoomParticipants)
-                    .ThenInclude(rp => rp.User) 
+                    .ThenInclude(rp => rp.User)
                 .FirstOrDefaultAsync(r => r.RoomId == roomId);
+        }
+
+        public async Task<IEnumerable<Room>> GetWaitingRoomsOlderThanAsync(TimeSpan retentionPeriod)
+        {
+            var cutoffTime = DateTime.UtcNow.Subtract(retentionPeriod);
+            return await _dbContext.Rooms
+                .Where(r => r.Status == RoomStatus.Pending &&
+                            r.EndTime == null &&
+                            r.CreatedAt < cutoffTime)
+                .ToListAsync();
         }
 
         public void Remove(Room room)

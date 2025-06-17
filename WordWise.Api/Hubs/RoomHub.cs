@@ -88,7 +88,7 @@ namespace WordWise.Api.Hubs
 
             if (result.IsSuccess && result.Data != null)
             {
-                // Gửi kết quả chi tiết (bao gồm cả câu hỏi tiếp theo nếu có) cho client vừa trả lời
+                // Gửi kết quả chi tiết cho client vừa trả lời
                 await Clients.Caller.SendAsync("AnswerResult", result.Data);
                 _logger.LogDebug("Sent AnswerResult (with next question for caller) to User {UserId} for Room {RoomId}.", userId, roomId);
             }
@@ -110,6 +110,36 @@ namespace WordWise.Api.Hubs
 
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
+            var userIdString = Context.UserIdentifier;
+            _logger.LogInformation("Client disconnected: {ConnectionId}. UserId: {UserId}", Context.ConnectionId, userIdString ?? "Anonymous");
+            if (!string.IsNullOrEmpty(userIdString) && Guid.TryParse(userIdString, out Guid userId))
+            {
+                var userLeftDetail = await _roomService.HandleUserDisconnectAsync(userId, Context.ConnectionId);
+                if (userLeftDetail != null)
+                {
+                    await Clients.Group(userLeftDetail.RoomId.ToString()).SendAsync("UserLeft", userLeftDetail.LeftParticipant);
+                    _logger.LogInformation("User {UserId} (from LeftParticipant DTO) (Connection: {ConnectionId}) processed as disconnected. Sent UserLeft to Room {RoomId}",
+                                         userLeftDetail.LeftParticipant.UserId, Context.ConnectionId, userLeftDetail.RoomId);
+
+                    var leaderboard = await _roomService.GetLeaderboarAsync(userLeftDetail.RoomId);
+                    if (leaderboard != null)
+                    {
+                        await Clients.Group(userLeftDetail.RoomId.ToString()).SendAsync("LeaderboardUpdate", leaderboard);
+                        _logger.LogInformation("Sent LeaderboardUpdate to Room {RoomId} after user {UserId} disconnected.",
+                                             userLeftDetail.RoomId, userLeftDetail.LeftParticipant.UserId);
+                    }
+
+                }
+                else
+                {
+                    _logger.LogInformation("User {UserId} (Connection: {ConnectionId}) disconnected, but no active room participation found to notify.",
+                                         userId, Context.ConnectionId);
+                }
+            }
+            else
+            {
+                _logger.LogWarning("Client disconnected (Connection: {ConnectionId}) but UserIdentifier was invalid or empty.", Context.ConnectionId);
+            }
             await base.OnDisconnectedAsync(exception);
         }
     }

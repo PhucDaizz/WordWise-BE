@@ -164,7 +164,7 @@ namespace WordWise.Api.Controllers
         }
 
         [HttpPost("{roomId:guid}/test-submit-answer")]
-        [AllowAnonymous] // Bỏ authorize để test dễ hơn, hoặc [Authorize] nếu muốn test với token student
+        [AllowAnonymous] 
         public async Task<IActionResult> TestSubmitAnswer(Guid roomId, [FromBody] TestSubmitAnswerRequestDtoForController request)
         {
             _logger.LogInformation("TestSubmitAnswer called for RoomId: {RoomId}, FlashcardId: {FlashcardId}", roomId, request.FlashcardId);
@@ -192,8 +192,7 @@ namespace WordWise.Api.Controllers
             }
 
 
-            // Nếu bạn vẫn giữ [Authorize] và dùng token student, dòng trên sẽ lấy studentId
-            // var studentId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            
 
             var result = await _roomService.ProcessAnswerAsync(roomId, studentId, request.FlashcardId, request.AnswerText);
 

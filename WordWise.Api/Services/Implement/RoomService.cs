@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using WordWise.Api.Common.Results;
+using WordWise.Api.Data;
 using WordWise.Api.Hubs;
 using WordWise.Api.Models.Domain;
 using WordWise.Api.Models.Dto.Room;
@@ -16,13 +18,15 @@ namespace WordWise.Api.Services.Implement
         private readonly IHubContext<RoomHub> _roomHubContext;
         private readonly ILogger<RoomService> _logger;
         private readonly IMapper _mapper;
+        private readonly WordWiseDbContext _dbContext;
 
-        public RoomService(IUnitOfWork unitOfWork, IHubContext<RoomHub> roomHubContext, ILogger<RoomService> logger, IMapper mapper)
+        public RoomService(IUnitOfWork unitOfWork, IHubContext<RoomHub> roomHubContext, ILogger<RoomService> logger, IMapper mapper, WordWiseDbContext dbContext)
         {
             _unitOfWork = unitOfWork;
             _roomHubContext = roomHubContext;
             _logger = logger;
             _mapper = mapper;
+            _dbContext = dbContext;
         }
         public async Task<ServiceResult> AdvanceToNextQuestionAsync(Guid roomId, Guid teacherId)
         {
@@ -182,28 +186,42 @@ namespace WordWise.Api.Services.Implement
                 return ServiceResult<JoinRoomResponseDto>.Failure("Room is full.");
             }
 
+            var existingParticipant = room.RoomParticipants.FirstOrDefault(p => p.UserId == studentIdString);
+
+
             if (room.RoomParticipants.Any(p => p.UserId == studentIdString))
             {
-                return ServiceResult<JoinRoomResponseDto>.Failure("You are already in this room.");
+                _logger.LogInformation("Student {StudentId} is rejoining Room {RoomId}", studentId, room.RoomId);
+                existingParticipant.Status = (room.Status == RoomStatus.Active) ? RoomParticipantStatus.Playing : RoomParticipantStatus.Joined;
+                existingParticipant.LastActivityAt = DateTime.UtcNow;
+                existingParticipant.CurrentQuestionIndex = (room.Status == RoomStatus.Active) ? existingParticipant.CurrentQuestionIndex : -1; 
+
+                _unitOfWork.RoomParticipants.Update(existingParticipant);
+                /*return ServiceResult<JoinRoomResponseDto>.Failure("You are already in this room.");*/
             }
 
-            var participant = new RoomParticipant
+            else
             {
-                RoomParticipantId = Guid.NewGuid(),
-                RoomId = room.RoomId,
-                UserId = studentIdString,
-                JoinedAt = DateTime.UtcNow,
-                Status = (room.Status == RoomStatus.Active) ? RoomParticipantStatus.Playing : RoomParticipantStatus.Joined,
-                LastActivityAt = DateTime.UtcNow
-            };
+                existingParticipant = new RoomParticipant
+                {
+                    RoomParticipantId = Guid.NewGuid(),
+                    RoomId = room.RoomId,
+                    UserId = studentIdString,
+                    JoinedAt = DateTime.UtcNow,
+                    Status = (room.Status == RoomStatus.Active) ? RoomParticipantStatus.Playing : RoomParticipantStatus.Joined,
+                    LastActivityAt = DateTime.UtcNow,
+                    CurrentQuestionIndex = (room.Status == RoomStatus.Active) ? 0 : -1, 
+                };
 
-            await _unitOfWork.RoomParticipants.AddAsync(participant);
+                await _unitOfWork.RoomParticipants.AddAsync(existingParticipant);
+            }
+
             await _unitOfWork.CompleteAsync();
 
             _logger.LogInformation("Student {StudentId} joined Room {RoomId} (Code: {RoomCode})", studentId, room.RoomId, roomCode);
 
             var studentUser = await _unitOfWork.Auth.GetUserByIdAsync(studentIdString);
-            var participantDtoForSignalR = _mapper.Map<RoomParticipantDto>(participant);
+            var participantDtoForSignalR = _mapper.Map<RoomParticipantDto>(existingParticipant);
             participantDtoForSignalR.Username = studentUser?.UserName;
 
             await _roomHubContext.Clients.Group(room.RoomId.ToString()).SendAsync("UserJoined", participantDtoForSignalR);
@@ -211,24 +229,45 @@ namespace WordWise.Api.Services.Implement
             var roomDto = _mapper.Map<RoomDto>(room);
             roomDto.TeacherName = (await _unitOfWork.Auth.GetUserByIdAsync(room.UserId))?.UserName;
             roomDto.FlashcardSetName = (await _unitOfWork.FlashcardSets.GetAsync(room.FlashcardSetId))?.Title;
-            roomDto.CurrentParticipantCount = room.RoomParticipants.Count + 1;
+            /*roomDto.CurrentParticipantCount = room.RoomParticipants.Count + 1;*/
 
-            var participantDto = _mapper.Map<RoomParticipantDto>(participant);
-            participantDto.Username = studentUser?.UserName;
+
+            // LẤY DANH SÁCH TẤT CẢ PARTICIPANTS HIỆN TẠI TRONG PHÒNG
+            var allParticipants = await _unitOfWork.RoomParticipants.GetParticipantsByRoomIdAsync(room.RoomId);
+            var currentParticipantsInRoomDto = new List<RoomParticipantDto>();
+            foreach (var p in allParticipants.Where(pDb => pDb.Status != RoomParticipantStatus.Left))
+            {
+                var pUser = await _unitOfWork.Auth.GetUserByIdAsync(p.UserId);
+                var pDto = _mapper.Map<RoomParticipantDto>(p);
+                pDto.Username = pUser?.UserName;
+                currentParticipantsInRoomDto.Add(pDto);
+            }
+            roomDto.CurrentParticipantCount = currentParticipantsInRoomDto.Count;
+
+
+
+
+            /*var participantDto = _mapper.Map<RoomParticipantDto>(existingParticipant);
+            participantDto.Username = studentUser?.UserName;*/
 
             FlashcardQuestionDto? currentQuestionDto = null;
 
             if (room.Status == RoomStatus.Active && room.CurrentQuestionIndex >= 0)
             {
                 var flashcards = await _unitOfWork.Flashcards.GetAllByFlashcardSetIdAsync(room.FlashcardSetId);
-                var currentFlashcard = flashcards?.OrderBy(f => f.FlashcardId).Skip(room.CurrentQuestionIndex).FirstOrDefault();
+                var currentFlashcard = flashcards?.OrderBy(f => f.FlashcardId).Skip(existingParticipant.CurrentQuestionIndex).FirstOrDefault();
                 if (currentFlashcard != null)
                 {
                     currentQuestionDto = MapToFlashcardQuestionDto(currentFlashcard, room.Mode);
                 }
             }
 
-            var response = new JoinRoomResponseDto { RoomInfo = roomDto, ParticipantInfo = participantDto, CurrentQuestion = currentQuestionDto };
+            var response = new JoinRoomResponseDto { 
+                RoomInfo = roomDto, 
+                ParticipantInfo = participantDtoForSignalR, 
+                CurrentQuestion = currentQuestionDto,
+                CurrentParticipantsInRoom = currentParticipantsInRoomDto,
+            };
             return ServiceResult<JoinRoomResponseDto>.Success(response);
 
         }
@@ -392,7 +431,45 @@ namespace WordWise.Api.Services.Implement
 
         public async Task<bool> IsUserParticipantInRoomAsync(Guid roomId, Guid userId)
         {
+            var room = await _unitOfWork.Rooms.GetByIdAsync(roomId);
+            if (room != null && room.UserId == userId.ToString())
+            {
+                _logger.LogInformation("User {UserId} is the teacher of Room {RoomId}. Authorized for SignalR group.", userId, roomId);
+                return true; 
+            }
             return await _unitOfWork.RoomParticipants.AnyAsync(rp => rp.RoomId == roomId && rp.UserId == userId.ToString() && rp.Status != RoomParticipantStatus.Left);
+        }
+
+        public async Task<UserLeftRoomDetailDto?> HandleUserDisconnectAsync(Guid userId, string connectionId)
+        {
+            string userIdString = userId.ToString();
+            _logger.LogInformation("Handling disconnect for User {UserIdString}, Connection {ConnectionId}", userIdString, connectionId);
+
+            var participantEntity = await _dbContext.RoomParticipants
+                .Include(p => p.Room)
+                .Include(p => p.Room.User)
+                .Where(rp => rp.UserId == userIdString && rp.Status != RoomParticipantStatus.Finished && 
+                    (rp.Status == RoomParticipantStatus.Playing || rp.Status == RoomParticipantStatus.Joined))
+                .OrderByDescending(rp => rp.LastActivityAt)
+                .ThenByDescending(rp => rp.JoinedAt)       
+                .FirstOrDefaultAsync();
+
+            if (participantEntity == null)
+            {
+                _logger.LogInformation("No active (non-finished room, playing/joined status) room participation found for disconnected User {UserIdString}", userIdString);
+                return null;
+            }
+
+            _logger.LogInformation("User {UserIdString} (ParticipantId: {ParticipantId}) was active in Room {RoomId}. Current DB status: {Status}. Room Status: {RoomStatus}",
+            userIdString, participantEntity.RoomParticipantId, participantEntity.RoomId, participantEntity.Status, participantEntity.Room.Status);
+
+            var leftParticipantDto = _mapper.Map<RoomParticipantDto>(participantEntity);
+
+            return new UserLeftRoomDetailDto
+            {
+                RoomId = participantEntity.RoomId,
+                LeftParticipant = leftParticipantDto
+            };
         }
     }
 }
