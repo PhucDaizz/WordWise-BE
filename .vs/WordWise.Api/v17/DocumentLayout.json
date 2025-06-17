@@ -62,8 +62,7 @@
               "RelativeToolTip": "WordWise.Api\\Program.cs",
               "ViewState": "AQIAAJYAAAAAAAAAAAAAAC4AAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T07:07:04.04Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T07:07:04.04Z"
             },
             {
               "$type": "Document",
@@ -88,8 +87,7 @@
               "RelativeToolTip": "WordWise.Api\\Repositories\\Interface\\IRoomRepository.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T04:10:32.332Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T04:10:32.332Z"
             },
             {
               "$type": "Document",
@@ -101,8 +99,7 @@
               "RelativeToolTip": "WordWise.Api\\Services\\Implement\\RoomService.cs",
               "ViewState": "AQIAAE4BAAAAAAAAAADwv4EAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T02:05:40.203Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T02:05:40.203Z"
             },
             {
               "$type": "Document",
@@ -114,8 +111,7 @@
               "RelativeToolTip": "WordWise.Api\\Services\\Interface\\IRoomService.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAABIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T04:26:16.825Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T04:26:16.825Z"
             },
             {
               "$type": "Document",
@@ -127,8 +123,7 @@
               "RelativeToolTip": "WordWise.Api\\Hubs\\RoomHub.cs",
               "ViewState": "AQIAAGYAAAAAAAAAAAA7wFoAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T01:49:46.176Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T01:49:46.176Z"
             },
             {
               "$type": "Document",
@@ -140,8 +135,7 @@
               "RelativeToolTip": "WordWise.Api\\Models\\Dto\\Room\\JoinRoomResponseDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T04:08:03.113Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T04:08:03.113Z"
             },
             {
               "$type": "Document",
@@ -153,8 +147,7 @@
               "RelativeToolTip": "WordWise.Api\\Models\\Dto\\Room\\UserLeftRoomDetailDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T04:35:31.297Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T04:35:31.297Z"
             }
           ]
         }
