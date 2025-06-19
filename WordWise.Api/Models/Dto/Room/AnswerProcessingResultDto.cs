@@ -7,5 +7,6 @@
         public int NewScore { get; set; }
         public int NextFlashcardId { get; set; } // ID của flashcard tiếp theo, hoặc Guid.Empty nếu hết
         public FlashcardQuestionDto? NextQuestion { get; set; }
+        public bool HasFinished { get; set; } = false;
     }
 }

@@ -91,6 +91,12 @@ namespace WordWise.Api.Hubs
                 // Gửi kết quả chi tiết cho client vừa trả lời
                 await Clients.Caller.SendAsync("AnswerResult", result.Data);
                 _logger.LogDebug("Sent AnswerResult (with next question for caller) to User {UserId} for Room {RoomId}.", userId, roomId);
+
+                if (result.Data.HasFinished)
+                {
+                    await Clients.Caller.SendAsync("StudentFinished", userId, roomId);
+                    _logger.LogInformation("User {UserId} has completed all questions in Room {RoomId}.", userId, roomId);
+                }
             }
             else
             {

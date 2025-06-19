@@ -315,12 +315,19 @@ namespace WordWise.Api.Services.Implement
             await _unitOfWork.StudentFlashcardAttempts.AddAsync(attempt);
 
             // Add the score to the participant
-            if (isCorrect) participant.Score += 10; 
+            if (isCorrect)
+            {
+                double secondsAns = (DateTime.UtcNow - participant.LastActivityAt.Value).TotalSeconds;
+                participant.Score += CalculateScore(isCorrect, secondsAns);
+
+            }
             participant.LastActivityAt = DateTime.UtcNow;
 
 
             FlashcardQuestionDto? nextQuestionForThisStudentDto = null;
             int nextPersonalIndex = participant.CurrentQuestionIndex + 1;
+            bool hasFinished = false;
+
             if (nextPersonalIndex < flashcardsInSet.Count())
             {
                 participant.CurrentQuestionIndex = nextPersonalIndex; // Cập nhật index mới cho participant
@@ -336,6 +343,7 @@ namespace WordWise.Api.Services.Implement
                 _logger.LogInformation("Student {StudentId} in Room {RoomId} has completed all flashcards.", studentId, roomId);
                 participant.Status = RoomParticipantStatus.Finished; 
                 participant.LastAnswerSubmittedAt = DateTime.UtcNow;
+                hasFinished = true; 
             }
 
             _unitOfWork.RoomParticipants.Update(participant); 
@@ -352,6 +360,7 @@ namespace WordWise.Api.Services.Implement
                 CorrectAnswer = (room.Mode == RoomMode.TermToDefinition) ? currentFlashcard.Definition : currentFlashcard.Term,
                 NewScore = participant.Score,
                 NextQuestion = nextQuestionForThisStudentDto, 
+                HasFinished = hasFinished
             };
 
 
@@ -427,6 +436,32 @@ namespace WordWise.Api.Services.Implement
         {
             string correctAnswer = (mode == RoomMode.TermToDefinition) ? currentFlashcard.Definition : currentFlashcard.Term;
             return string.Equals(correctAnswer.Trim(), answerText.Trim(), StringComparison.OrdinalIgnoreCase);
+        }
+
+        private int CalculateScore(bool isCorrect, double secondsAns)
+        {
+            const double thresholdTime = 15.0; 
+            const double maxPenaltyTime = 30.0; 
+            const int minScore = 4;  
+            const int maxScore = 10;
+
+            if (!isCorrect) return 0;
+
+            if (secondsAns <= thresholdTime)
+            {
+                return maxScore;
+            }
+            else if (secondsAns <= maxPenaltyTime)
+            {
+                double overtime = secondsAns - thresholdTime;
+                double penaltyRatio = overtime / (maxPenaltyTime - thresholdTime);
+                int penalty = (int)Math.Floor((maxScore - minScore) * penaltyRatio);
+                return Math.Max(minScore, maxScore - penalty); 
+            }
+            else
+            {
+                return minScore;
+            }
         }
 
         public async Task<bool> IsUserParticipantInRoomAsync(Guid roomId, Guid userId)
