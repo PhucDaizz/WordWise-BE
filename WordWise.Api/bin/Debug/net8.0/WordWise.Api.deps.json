@@ -965,14 +965,7 @@
           }
         }
       },
-      "System.Formats.Asn1/8.0.2": {
-        "runtime": {
-          "lib/net8.0/System.Formats.Asn1.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.1325.6609"
-          }
-        }
-      },
+      "System.Formats.Asn1/8.0.2": {},
       "System.IdentityModel.Tokens.Jwt/8.6.1": {
         "dependencies": {
           "Microsoft.IdentityModel.JsonWebTokens": "8.6.1",

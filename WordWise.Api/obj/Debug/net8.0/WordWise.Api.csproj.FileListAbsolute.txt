@@ -58,7 +58,6 @@ C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\System.Composition.Ru
 C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\System.Composition.TypedParts.dll
 C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
 C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\System.Drawing.Common.dll
-C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\System.Formats.Asn1.dll
 C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\System.Memory.Data.dll
 C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\System.Runtime.Caching.dll
@@ -138,11 +137,6 @@ C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\WordWise.Api.MvcAppli
 C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\WordWise.Api.MvcApplicationPartsAssemblyInfo.cache
 C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\staticwebassets.build.json
 C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\staticwebassets.development.json
-C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\staticwebassets\msbuild.WordWise.Api.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\staticwebassets\msbuild.build.WordWise.Api.props
-C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.WordWise.Api.props
-C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.WordWise.Api.props
-C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\scopedcss\bundle\WordWise.Api.styles.css
 C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\WordWise.442871CB.Up2Date
 C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\WordWise.Api.dll
@@ -153,3 +147,11 @@ C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\ref\WordWise.Api.dll
 C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\WordWise.Api.sourcelink.json
 C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\Gemini.NET.dll
 C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Workspace\c#\WordWise.Api\WordWise.Api\bin\Debug\net8.0\WordWise.Api.staticwebassets.endpoints.json
+C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Workspace\c#\WordWise.Api\WordWise.Api\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
